@@ -25,5 +25,23 @@ namespace CarBook.Persistence.Repositories.CarRepositories
                 .Include(car => car.Brand)
                 .ToListAsync();
         }
+
+        public async Task<IList<Car>> GetCarsListWithPricingAsync(string pricingType)
+        {
+            return await _context.Cars
+                .Include(car => car.Brand)
+                .Include(car => car.CarPricings).ThenInclude(pricing => pricing.Pricing)
+                .Where(car => car.CarPricings.Any(pricing => pricing.Pricing.Name == pricingType))
+                .ToListAsync();
+        }
+
+        public async Task<IList<Car>> GetLastCarsListWithBrandAsync(int number)
+        {
+            return await _context.Cars
+                .Include(car => car.Brand)
+                .OrderByDescending(car => car.CarID)
+                .Take(number)
+                .ToListAsync();
+        }
     }
 }

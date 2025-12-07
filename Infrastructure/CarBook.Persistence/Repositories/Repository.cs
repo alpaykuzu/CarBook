@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,8 +25,12 @@ namespace CarBook.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null)
         {
+            if (predicate != null)
+            {
+                return await _context.Set<T>().Where(predicate).ToListAsync();
+            }
             return await _context.Set<T>().ToListAsync();
         }
 

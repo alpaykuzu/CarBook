@@ -10,5 +10,7 @@ namespace CarBook.Application.Interfaces.CarInterfaces
     public interface ICarRepository
     {
         Task<IList<Car>> GetCarsListWithBrandAsync();
+        Task<IList<Car>> GetLastCarsListWithBrandAsync(int number);
+        Task<IList<Car>> GetCarsListWithPricingAsync(string pricingType);
     }
 }
