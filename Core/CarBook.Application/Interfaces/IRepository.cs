@@ -14,5 +14,7 @@ namespace CarBook.Application.Interfaces
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
+        Task<int> GetCountAsync();
+        IQueryable<T> GetQueryable();
     }
 }

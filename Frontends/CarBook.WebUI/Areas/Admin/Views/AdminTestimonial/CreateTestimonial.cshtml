@@ -1,0 +1,39 @@
+﻿@model CreateTestimonialDto
+@{
+    ViewData["Title"] = "CreateTestimonial";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Yeni Referans Girişi</h4>
+                        <p class="card-subtitle mb-4">Referans ile ilgili temel bilgileri eksiksiz doldurmanız önemlidir. Veri girişlerinden sonra kaydet butonuna tıklayarak işlemi tamamlayabilirsiniz.</p>
+                        <form method="post">
+                            <div class="form-group">
+                                <label for="exampleInputTitle">İsim</label>
+                                <input type="text" class="form-control" id="exampleInputTitle" placeholder="İsmi Giriniz" asp-for="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputDescription">Ünvan</label>
+                                <input type="text" class="form-control" id="exampleInputModel" placeholder="Ünvanı Giriniz" asp-for="title">
+                            </div>    <div class="form-group">
+                                <label for="exampleInputVideoDescription">Yorum</label>
+                                <textarea type="text" class="form-control" id="exampleInputVideoDescription" placeholder="Yorumu Giriniz" asp-for="comment"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputVideoUrl">Resim Url</label>
+                                <input type="text" class="form-control" id="exampleInputVideoUrl" placeholder="Resim Linkini Giriniz" asp-for="imageUrl">
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

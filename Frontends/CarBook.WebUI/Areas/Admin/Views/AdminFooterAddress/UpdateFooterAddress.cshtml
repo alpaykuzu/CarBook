@@ -1,0 +1,40 @@
+﻿@model UpdateFooterAddressDto
+@{
+    ViewData["Title"] = "UpdateFooterAddress";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Alt Adres Güncelleme</h4>
+                        <p class="card-subtitle mb-4">Alt adres ile ilgili temel bilgileri eksiksiz doldurmanız önemlidir. Veri düzenlemerinden sonra kaydet butonuna tıklayarak güncelleme işlemi tamamlayabilirsiniz.</p>
+                        <form method="post">
+                            <input type="hidden" asp-for="FooterAddressID" />
+                            <div class="form-group">
+                                <label for="exampleInputAddress">Adres</label>
+                                <input type="text" class="form-control" id="exampleInputAddress" placeholder="Adresi Giriniz" asp-for="Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputDescription">Açıklama</label>
+                                <input type="text" class="form-control" id="exampleInputModel" placeholder="Açıklama Giriniz" asp-for="Description">
+                            </div>    <div class="form-group">
+                                <label for="exampleInputPhone">Telefon</label>
+                                <input type="text" class="form-control" id="exampleInputPhone" placeholder="Telefon numarası Giriniz" asp-for="Phone">
+                            </div>    <div class="form-group">
+                                <label for="exampleInputEmail">Email</label>
+                                <input type="email" class="form-control" id="exampleInputEmail" placeholder="Email Giriniz" asp-for="Email">
+                            </div>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

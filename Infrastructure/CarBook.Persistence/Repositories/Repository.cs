@@ -39,6 +39,16 @@ namespace CarBook.Persistence.Repositories
             return await _context.Set<T>().FindAsync(id);
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Set<T>().CountAsync();
+        }
+
+        public IQueryable<T> GetQueryable()
+        {
+            return _context.Set<T>().AsQueryable();
+        }
+
         public async Task RemoveAsync(T entity)
         {
             _context.Set<T>().Remove(entity);

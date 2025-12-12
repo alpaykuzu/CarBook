@@ -18,7 +18,6 @@ namespace CarBook.Persistence.Repositories.CarRepositories
         {
             _context = context;
         }
-
         public async Task<IList<Car>> GetCarsListWithBrandAsync()
         {
             return await _context.Cars

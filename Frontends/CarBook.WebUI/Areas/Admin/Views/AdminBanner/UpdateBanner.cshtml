@@ -6,19 +6,15 @@
 
 <div class="page-content">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Banner Alanı Güncelleme</h4>
                         <p class="card-subtitle mb-4">Banner ile ilgili temel bilgileri eksiksiz doldurmanız önemlidir. Veri düzenlemerinden sonra kaydet butonuna tıklayarak güncelleme işlemi tamamlayabilirsiniz.</p>
-
                         <form method="post">
-
                             <input type="hidden" asp-for="BannerID" />
-
-                            < <div class="form-group">
+                            <div class="form-group">
                                 <label for="exampleInputTitle">Başlık</label>
                                 <input type="text" class="form-control" id="exampleInputModel" placeholder="Başlığı Giriniz" asp-for="Title">
                             </div>
@@ -32,10 +28,8 @@
                                 <label for="exampleInputVideoUrl">Özellik</label>
                                 <input type="text" class="form-control" id="exampleInputVideoUrl" placeholder="Video Linki Giriniz" asp-for="VideoUrl">
                             </div>
-
                             <button type="submit" class="btn btn-primary waves-effect waves-light">Kaydet</button>
                         </form>
-
                     </div>
                 </div>
             </div>

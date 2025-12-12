@@ -1,0 +1,58 @@
+﻿@model List<ResultBlogWithAuthorDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Blog İşlemleri</h4>
+                        <p class="card-subtitle mb-4">
+                            Blog ile ilgili yayından kaldırma ve listeleme gibi işlemleri bu sayfa üzerinden gerçekleştirebilirsiniz. Blog eklemek veya güncellemek için sisteme yazar olarak giriş yapmanız gerekmektedir.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Başlık</th>
+                                        <th>Yazar</th>
+                                        <th>Kategori</th>
+                                        <th>Tarih</th>
+                                        <th>Sil</th>
+                                        <th>Blogu Aç</th>
+                                        <th>Yorumlar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td>@item.Title</td>
+                                            <td>@item.AuthorName</td>
+                                            <td>@item.CategoryName</td>
+                                            <td>@item.CreatedDate</td>
+                                            <td><a href="/Admin/AdminBlog/RemoveBlog/@item.BlogID" class="btn btn-outline-danger">Sil</a></td>
+                                            <td><a href="/BlogDetail/Index/@item.BlogID" class="btn btn-outline-secondary">Blogu Aç</a></td>
+                                            <td><a href="/Admin/AdminComment/CommentListByBlog/@item.BlogID" class="btn btn-outline-dark">Yorumlar</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

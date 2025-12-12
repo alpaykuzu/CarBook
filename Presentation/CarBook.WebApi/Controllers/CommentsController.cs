@@ -2,6 +2,7 @@
 using CarBook.Application.Features.Comments.Commands.RemoveComment;
 using CarBook.Application.Features.Comments.Commands.UpdateComment;
 using CarBook.Application.Features.Comments.Queries.GetAllComment;
+using CarBook.Application.Features.Comments.Queries.GetAllCommentByBlog;
 using CarBook.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -22,6 +23,11 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAllComment()
         {
             return Ok(await _mediator.Send(new GetAllCommentQueryRequest()));
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAllCommentByBlog(int id)
+        {
+            return Ok(await _mediator.Send(new GetAllCommentByBlogQueryRequest(id)));
         }
         [HttpPost]
         public async Task<IActionResult> CreateComment([FromBody] CreateCommentCommandRequest request)
