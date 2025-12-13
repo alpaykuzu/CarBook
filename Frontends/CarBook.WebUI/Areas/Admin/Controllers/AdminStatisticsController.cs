@@ -131,6 +131,59 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
                 ViewBag.MostBlog = values.BlogTitle;
             }
 
+            //Car Count By Km
+            var responseCarCountByKm = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByKm/20000");
+
+            if (responseCarCountByKm.IsSuccessStatusCode)
+            {
+                var jsonData = await responseCarCountByKm.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ResultCarCountDto>(jsonData);
+                ViewBag.CarCountByKm = values.CarCount;
+            }
+
+            //Gasoline Car Count
+            var responseCarCountGasoline = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Gasoline");
+
+            if (responseCarCountGasoline.IsSuccessStatusCode)
+            {
+                var jsonData = await responseCarCountGasoline.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ResultCarCountDto>(jsonData);
+                ViewBag.CarCountGasoline = values.CarCount;
+            }
+
+            //Diesel Car Count
+            var responseCarCountDiesel = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Diesel");
+
+            if (responseCarCountDiesel.IsSuccessStatusCode)
+            {
+                var jsonData = await responseCarCountDiesel.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ResultCarCountDto>(jsonData);
+                ViewBag.CarCountDiesel = values.CarCount;
+            }
+
+
+            //Car Model And Brand Max Daily Price
+            var responseCarModelAndBrandMax = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarByCarPricing?PricingType=Günlük&IsMax=true");
+
+            if (responseCarModelAndBrandMax.IsSuccessStatusCode)
+            {
+                var jsonData = await responseCarModelAndBrandMax.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ResultCarByCarPricing>(jsonData);
+                ViewBag.CarModelMax = values.Model;
+                ViewBag.CarBrandMax = values.Brand;
+            }
+
+            //Car Model And Brand Min Daily Price
+            var responseCarModelAndBrandMin = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarByCarPricing?PricingType=Günlük&IsMax=false");
+
+            if (responseCarModelAndBrandMin.IsSuccessStatusCode)
+            {
+                var jsonData = await responseCarModelAndBrandMin.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<ResultCarByCarPricing>(jsonData);
+                ViewBag.CarModelMin = values.Model;
+                ViewBag.CarBrandMin = values.Brand;
+            }
+
             return View();
         }
     }
