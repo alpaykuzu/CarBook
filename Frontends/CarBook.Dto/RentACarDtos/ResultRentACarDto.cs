@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarBook.Application.Features.RentACars.Queries.GetRentACarByLocationAndAvailable
+namespace CarBook.Dto.RentACarDtos
 {
-    public class GetRentACarByLocationAndAvailableQueryResponse
+    public class ResultRentACarDto
     {
         public int RentACarID { get; set; }
         public int CarID { get; set; }

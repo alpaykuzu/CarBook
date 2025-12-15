@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,21 @@ namespace CarBook.Application.Features.RentACars.Queries.GetRentACarByLocationAn
 
         public async Task<List<GetRentACarByLocationAndAvailableQueryResponse>> Handle(GetRentACarByLocationAndAvailableQueryRequest request, CancellationToken cancellationToken)
         {
-            var result = await repository.GetAllAsync(r => r.IsAvailable == true && r.LocationID == request.LocationID);
+            var result = await repository.GetQueryable()
+                .Include(c => c.Car).ThenInclude(b => b.Brand)
+                .Include(c => c.Car).ThenInclude(cp => cp.CarPricings).ThenInclude(p => p.Pricing)
+                .Where(f => f.IsAvailable == true && f.LocationID == request.LocationID).ToListAsync();
+
             return result.Select(x => new GetRentACarByLocationAndAvailableQueryResponse
             {
                 RentACarID = x.RentACarID,
                 CarID = x.CarID,
-                IsAvailable = x.IsAvailable,
-                LocationID = x.LocationID,
+                BrandID = x.Car.BrandID,
+                BrandName = x.Car.Brand.Name,
+                CoverImageUrl = x.Car.CoverImageUrl,
+                Model = x.Car.Model,
+                PricingName = "Günlük",
+                PricingAmount = x.Car.CarPricings.FirstOrDefault(pricing => pricing.Pricing.Name == "Günlük").Amount.ToString()
             }).ToList();
         }
     }

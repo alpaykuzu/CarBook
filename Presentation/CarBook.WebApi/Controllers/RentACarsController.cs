@@ -16,8 +16,8 @@ namespace CarBook.WebApi.Controllers
         {
             this.mediator = mediator;
         }
-        [HttpGet("{locationID}")]
-        public async Task<IActionResult> GetByLocationRentACar(int locationID)
+        [HttpGet]
+        public async Task<IActionResult> GetByLocationRentACar([FromQuery] int locationID)
         {
             return Ok(await mediator.Send(new GetRentACarByLocationAndAvailableQueryRequest(locationID)));
         }

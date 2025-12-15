@@ -34,9 +34,14 @@ namespace CarBook.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Index(string p)
+        public IActionResult Index(string book_pick_date, string book_off_date, string time_pick, string time_off, string locationID)
         {
-            TempData["value"] = p;
+            TempData["book_pick_date"] = book_pick_date;
+            TempData["book_off_date"] = book_off_date;
+            TempData["time_pick"] = time_pick;
+            TempData["time_off"] = time_off;
+            TempData["locationID"] = locationID;
+
             return RedirectToAction("Index", "RentACarList");
         }
     }
