@@ -64,7 +64,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             //Brand Count
             var responseBrand = await client.GetAsync("https://localhost:7131/api/Statistics/GetBrandCount");
 
-            if (responseBlog.IsSuccessStatusCode)
+            if (responseBrand.IsSuccessStatusCode)
             {
                 var jsonData = await responseBrand.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<ResultBrandCountDto>(jsonData);

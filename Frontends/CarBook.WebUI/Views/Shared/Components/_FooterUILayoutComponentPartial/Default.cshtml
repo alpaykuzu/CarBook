@@ -1,66 +1,138 @@
-﻿<footer class="ftco-footer ftco-bg-dark ftco-section">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2"><a href="#" class="logo">Car<span>book</span></a></h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Information</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">About</a></li>
-                        <li><a href="#" class="py-2 d-block">Services</a></li>
-                        <li><a href="#" class="py-2 d-block">Term and Conditions</a></li>
-                        <li><a href="#" class="py-2 d-block">Best Price Guarantee</a></li>
-                        <li><a href="#" class="py-2 d-block">Privacy &amp; Cookies Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Müşteri Desteği</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="py-2 d-block">FAQ</a></li>
-                        <li><a href="#" class="py-2 d-block">Payment Option</a></li>
-                        <li><a href="#" class="py-2 d-block">Booking Tips</a></li>
-                        <li><a href="#" class="py-2 d-block">How it works</a></li>
-                        <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Have a Questions?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+﻿@model List<ResultFooterAddressDto>
+
+<footer class="ftco-footer ftco-bg-dark ftco-section">
+    @foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">
+                            <a href="#" class="logo">Car<span>book</span></a>
+                        </h2>
+                        <p>@item.Description</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
 
-                <p>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Bilgilendirme</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="/About/Index" class="py-2 d-block">Hakkımızda</a></li>
+                            <li><a href="/Car/Index" class="py-2 d-block">Hizmetlerimiz</a></li>
+                            <li><a href="#" class="py-2 d-block js-terms">Şartlar ve Koşullar</a></li>
+                            <li><a href="#" class="py-2 d-block js-price">En İyi Fiyat Garantisi</a></li>
+                            <li><a href="#" class="py-2 d-block js-privacy">Gizlilik &amp; Çerez Politikası</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Müşteri Desteği</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="py-2 d-block js-faq">Sıkça Sorulan Sorular</a></li>
+                            <li><a href="#" class="py-2 d-block js-payment">Ödeme Seçenekleri</a></li>
+                            <li><a href="/CarPricing/Index" class="py-2 d-block">Kiralama</a></li>
+                            <li><a href="#" class="py-2 d-block js-how">Nasıl Çalışır?</a></li>
+                            <li><a href="/Contact/Index" class="py-2 d-block">Bize Ulaşın</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Sorularınız mı Var?</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">@item.Address</span></li>
+                                <li><span class="icon icon-phone"></span><span class="text">@item.Phone</span></li>
+                                <li><span class="icon icon-envelope"></span><span class="text">@item.Email</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>
+                        © <script>document.write(new Date().getFullYear());</script>
+                        Tüm hakları saklıdır | Bu tema
+                        <i class="icon-heart color-danger"></i>
+                        ile <a href="https://colorlib.com" target="_blank">Colorlib</a> tarafından hazırlanmıştır
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </footer>
 
-<!-- loader -->
-<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.js-terms').click(function () {
+            Swal.fire({
+                title: 'Şartlar ve Koşullar',
+                text: 'CarBook üzerinden yapılan tüm araç kiralama işlemleri, kiralama süresi, teslim alma ve teslim etme koşulları, yakıt politikası ve sigorta kapsamlarını içerir. Araçlar yalnızca belirtilen şartlara uygun şekilde kullanılmalı, üçüncü şahıslara devredilmemelidir.',
+                icon: 'info',
+                confirmButtonText: 'Anladım'
+            });
+        });
+
+        $('.js-price').click(function () {
+            Swal.fire({
+                title: 'En İyi Fiyat Garantisi',
+                text: 'CarBook, aynı araç ve tarih için daha düşük bir fiyat bulmanız durumunda aradaki farkı telafi etmeyi taahhüt eder. Şeffaf fiyat politikamız sayesinde gizli ücretlerle karşılaşmazsınız.',
+                icon: 'success',
+                confirmButtonText: 'Tamam'
+            });
+        });
+
+        $('.js-privacy').click(function () {
+            Swal.fire({
+                title: 'Gizlilik & Çerez Politikası',
+                text: 'Kişisel verileriniz KVKK kapsamında korunur. Web sitemiz, kullanıcı deneyimini geliştirmek amacıyla çerezler kullanır. Hiçbir kişisel bilgi üçüncü taraflarla paylaşılmaz.',
+                icon: 'warning',
+                confirmButtonText: 'Bilgilendirme için teşekkürler'
+            });
+        });
+
+        $('.js-faq').click(function () {
+            Swal.fire({
+                title: 'Sıkça Sorulan Sorular',
+                text: 'Araç kiralama süreci, ödeme yöntemleri, iptal ve iade koşulları, sigorta detayları ve teslim alma işlemleri hakkında en çok merak edilen sorular bu bölümde yanıtlanmaktadır.',
+                icon: 'question',
+                confirmButtonText: 'Kapat'
+            });
+        });
+
+        $('.js-payment').click(function () {
+            Swal.fire({
+                title: 'Ödeme Seçenekleri',
+                text: 'Kredi kartı ve banka kartı ile güvenli ödeme yapabilirsiniz. Tüm işlemler SSL sertifikası ile korunur. Ek ücretler ödeme öncesinde açıkça belirtilir.',
+                icon: 'info',
+                confirmButtonText: 'Anladım'
+            });
+        });
+
+        $('.js-how').click(function () {
+            Swal.fire({
+                title: 'CarBook Nasıl Çalışır?',
+                text: 'Aracınızı seçin, tarih ve lokasyonu belirleyin, ödemenizi yapın ve aracınızı kolayca teslim alın. Tüm süreç hızlı, güvenli ve kullanıcı dostudur.',
+                icon: 'success',
+                confirmButtonText: 'Harika!'
+            });
+        });
+
+    });
+</script>

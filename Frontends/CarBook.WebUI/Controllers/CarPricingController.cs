@@ -1,30 +1,29 @@
 ﻿using CarBook.Dto.BlogDtos;
-using CarBook.Dto.CarDtos;
+using CarBook.Dto.CarPricingDtos;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace CarBook.WebUI.Controllers
 {
-    public class BlogController : Controller
+    public class CarPricingController : Controller
     {
-
         private readonly IHttpClientFactory _httpClientFactory;
-        public BlogController(IHttpClientFactory httpClientFactory)
+        public CarPricingController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
-
         public async Task<IActionResult> Index()
         {
-            ViewBag.v1 = "Bloglar";
-            ViewBag.v2 = "Bloglarımız";
+            ViewBag.v1 = "Fiyatlar";
+            ViewBag.v2 = "Araç Fiyatları";
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7131/api/Blogs/GetLastNBlog");
+            var response = await client.GetAsync("https://localhost:7131/api/CarPricings/GetAllCarPricingsWithCar");
 
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultBlogWithAuthorDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultCarPricingDto>>(jsonData);
                 return View(values);
             }
             return View();
