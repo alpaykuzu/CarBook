@@ -1,0 +1,101 @@
+﻿@model List<ResultCarFeatureDto>
+@{
+    ViewData["Title"] = "Car Features";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h4 class="card-title mb-3">Araba Özellikleri İşlemleri</h4>
+                        <p class="card-subtitle mb-4 text-muted">
+                            Araca ait özellikleri buradan aktif / pasif olarak yönetebilirsiniz.
+                        </p>
+
+                        <div class="row">
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <div class="col-md-6 col-lg-4 mb-3">
+                                    <div class="border rounded p-3 d-flex align-items-center justify-content-between">
+
+                                        <!-- Sol taraf: checkbox + isim -->
+                                        <div class="form-check m-0">
+                                            <input type="hidden" asp-for="@Model[i].CarFeatureID" />
+                                            <input type="hidden" asp-for="@Model[i].FeatureID" />
+                                            <input type="hidden" asp-for="@Model[i].CarID" />
+                                            <input type="hidden" asp-for="@Model[i].Name" />
+
+                                            <input class="form-check-input feature-checkbox"
+                                                   type="checkbox"
+                                                   data-car-feature-id="@Model[i].CarFeatureID"
+                                                   @(Model[i].Available ? "checked" : "") />
+
+                                            <label class="form-check-label ms-2 fw-semibold">
+                                                @Model[i].Name
+                                            </label>
+                                        </div>
+
+                                        <!-- Sağ taraf: sil butonu -->
+                                        <a asp-area="Admin"
+                                           asp-controller="AdminCarFeature"
+                                           asp-action="RemoveCarFeature"
+                                           asp-route-id="@Model[i].CarFeatureID"
+                                           asp-route-carId="@Model[i].CarID"
+                                           class="btn btn-outline-danger btn-sm"
+                                           title="Özelliği Sil">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <hr />
+
+                        <a href="/Admin/AdminCarFeature/CreateCarFeature/@ViewBag.carID"
+                           class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> Yeni Araba Özelliği Ekle
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll(".feature-checkbox").forEach(cb => {
+        cb.addEventListener("change", function () {
+
+            const data = {
+                CarFeatureID: this.dataset.carFeatureId
+            };
+
+            fetch("/Admin/AdminCarFeature/UpdateCarFeature", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(res => {
+                if (!res.ok) {
+                    alert("Güncelleme başarısız!");
+                    this.checked = !this.checked;
+                }
+            })
+            .catch(() => {
+                alert("Sunucu hatası!");
+                this.checked = !this.checked;
+            });
+        });
+    });
+</script>

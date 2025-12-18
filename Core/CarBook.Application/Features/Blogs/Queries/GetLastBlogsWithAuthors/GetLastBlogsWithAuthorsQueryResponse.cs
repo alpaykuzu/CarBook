@@ -19,5 +19,6 @@ namespace CarBook.Application.Features.Blogs.Queries.GetLastBlogsWithAuthors
         public string CategoryName { get; set; }
         public string CoverImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int CommentCount { get; set; }
     }
 }

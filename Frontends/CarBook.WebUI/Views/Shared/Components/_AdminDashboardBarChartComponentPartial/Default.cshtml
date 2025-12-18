@@ -1,0 +1,55 @@
+﻿
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-right position-relative">
+                <a href="#" class="dropdown-toggle h4 text-muted" data-toggle="dropdown">
+                    <i class="mdi mdi-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#" class="dropdown-item">Detaylar</a></li>
+                </ul>
+            </div>
+
+            <h4 class="card-title d-inline-block">Günlük Kiralama Dağılımı</h4>
+
+            <div style="height:260px">
+                <canvas id="dailyRentalChart"></canvas>
+            </div>
+
+            <div class="row text-center mt-4">
+                <div class="col-6">
+                    <h4>358</h4>
+                    <p class="text-muted mb-0">Toplam Kiralama</p>
+                </div>
+                <div class="col-6">
+                    <h4>21</h4>
+                    <p class="text-muted mb-0">Aktif Araç</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Chart(document.getElementById('dailyRentalChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Pzt', 'Sal', 'Çar', 'Per', 'Cum', 'Cmt', 'Paz'],
+            datasets: [{
+                label: 'Kiralama Sayısı',
+                data: [45, 60, 52, 70, 85, 90, 75],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

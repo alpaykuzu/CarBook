@@ -32,7 +32,8 @@ namespace CarBook.Application.Features.Blogs.Queries.GetLastBlogsWithAuthors
                 CoverImageUrl = b.CoverImageUrl,
                 CreatedDate = b.CreatedDate,
                 AuthorDescription = b.Author.Description,
-                AuthorImageUrl = b.Author.ImageUrl
+                AuthorImageUrl = b.Author.ImageUrl,
+                CommentCount = b.Comments.Where(x => x.BlogID == b.BlogID).Count()
             }).ToList();
         }
     }

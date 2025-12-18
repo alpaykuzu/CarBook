@@ -26,6 +26,7 @@ namespace CarBook.Application.Features.Comments.Queries.GetAllComment
                 BlogID = c.BlogID,
                 CommentID = c.CommentID,
                 Content = c.Content,
+                Email = c.Email,
                 CreatedDate = c.CreatedDate,
                 Name = c.Name
             }).ToList();

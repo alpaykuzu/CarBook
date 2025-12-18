@@ -23,6 +23,7 @@ namespace CarBook.Application.Features.Comments.Commands.CreateComment
             var comment = new Comment
             {
                 Name = request.Name,
+                Email = request.Email,
                 BlogID = request.BlogID,
                 Content = request.Content,
                 CreatedDate = request.CreatedDate

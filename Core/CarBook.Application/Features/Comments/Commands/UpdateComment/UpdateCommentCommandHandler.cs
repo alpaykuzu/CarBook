@@ -25,6 +25,7 @@ namespace CarBook.Application.Features.Comments.Commands.UpdateComment
                 throw new Exception("Pricing not found");
 
             comment.Name = request.Name;
+            comment.Email = request.Email;
             comment.CreatedDate = request.CreatedDate;
             comment.Content = request.Content;
          

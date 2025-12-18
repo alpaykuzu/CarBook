@@ -1,0 +1,56 @@
+﻿
+<div class="col-lg-4">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title d-inline-block">Yıllık Kiralama Sayıları</h4>
+
+            <div style="height: 260px;">
+                <canvas id="rentalLineChart"></canvas>
+            </div>
+
+            <div class="row text-center mt-4">
+                <div class="col-6">
+                    <h4>₺ 550.875</h4>
+                    <p class="text-muted mb-0">Toplam Gelir</p>
+                </div>
+                <div class="col-6">
+                    <h4>4568</h4>
+                    <p class="text-muted mb-0">Toplam Kiralama</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('rentalLineChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [
+                'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran',
+                'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'
+            ],
+            datasets: [{
+                label: 'Kiralama Sayısı',
+                data: [30, 45, 28, 50, 42, 60, 55, 70, 65, 80, 75, 90],
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 10
+                    }
+                }
+            }
+        }
+    });
+</script>

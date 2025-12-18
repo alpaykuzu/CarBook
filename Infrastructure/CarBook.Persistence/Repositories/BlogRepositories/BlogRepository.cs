@@ -32,11 +32,13 @@ namespace CarBook.Persistence.Repositories.BlogRepositories
             if (number == 0)
                 return await _context.Blogs.Include(a => a.Author)
                     .Include(c => c.Category)
+                    .Include(d => d.Comments)
                     .OrderByDescending(b => b.BlogID)
                     .ToListAsync();
 
             return await _context.Blogs.Include(a => a.Author)
                 .Include(c => c.Category)
+                .Include(d => d.Comments)
                 .OrderByDescending(b => b.BlogID)
                 .Take(number.Value)
                 .ToListAsync();

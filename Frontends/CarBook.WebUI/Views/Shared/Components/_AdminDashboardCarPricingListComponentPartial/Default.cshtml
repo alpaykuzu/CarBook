@@ -1,0 +1,89 @@
+﻿@model List<ResultCarPricingDto>
+
+<div class="col-xl-6">
+    <div class="card">
+        <div class="card-body">
+
+            <h4 class="card-title">Araba ve Kiralama Fiyatları</h4>
+
+            <div class="table-responsive">
+                <table class="table table-centered table-hover table-xl mb-0" id="priceTable">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">Marka</th>
+                            <th class="border-top-0">Model</th>
+                            <th class="border-top-0">Saatlik Fiyat</th>
+                            <th class="border-top-0">Günlük Fiyat</th>
+                            <th class="border-top-0">Haftalık Fiyat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="price-row">
+                                <td class="text-truncate">@item.BrandName</td>
+                                <td class="text-truncate">@item.Model</td>
+                                <td class="text-truncate">₺ @item.HourlyPrice</td>
+                                <td class="text-truncate">₺ @item.DailyPrice</td>
+                                <td class="text-truncate">₺ @item.WeeklyPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="d-flex justify-content-end mt-3">
+                <ul class="pagination pagination-sm mb-0" id="pagination"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const rowsPerPage = 10;
+    const rows = document.querySelectorAll(".price-row");
+    const pagination = document.getElementById("pagination");
+
+    let currentPage = 1;
+    const pageCount = Math.ceil(rows.length / rowsPerPage);
+
+    function showPage(page) {
+        currentPage = page;
+
+        rows.forEach((row, index) => {
+            row.style.display =
+                index >= (page - 1) * rowsPerPage && index < page * rowsPerPage
+                    ? ""
+                    : "none";
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        pagination.innerHTML = "";
+
+        for (let i = 1; i <= pageCount; i++) {
+            const li = document.createElement("li");
+            li.className = "page-item " + (i === currentPage ? "active" : "");
+
+            const a = document.createElement("a");
+            a.className = "page-link";
+            a.href = "#";
+            a.innerText = i;
+
+            a.onclick = function (e) {
+                e.preventDefault();
+                showPage(i);
+            };
+
+            li.appendChild(a);
+            pagination.appendChild(li);
+        }
+    }
+
+    // İlk sayfa
+    showPage(1);
+</script>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarBook.Application.Features.Comments.Queries.GetAllCommentByBlog
 {
-    internal class GetAllCommentByBlogQueryHandler : IRequestHandler<GetAllCommentByBlogQueryRequest, List<GetAllCommentByBlogQueryResponse>>
+    public class GetAllCommentByBlogQueryHandler : IRequestHandler<GetAllCommentByBlogQueryRequest, List<GetAllCommentByBlogQueryResponse>>
     {
         private readonly IRepository<Comment> _repository;
 
@@ -26,6 +26,7 @@ namespace CarBook.Application.Features.Comments.Queries.GetAllCommentByBlog
                 BlogID = x.BlogID,
                 CommentID = x.CommentID,
                 Content = x.Content,
+                Email = x.Email,
                 CreatedDate = x.CreatedDate,
                 Name = x.Name,
             }).ToList();

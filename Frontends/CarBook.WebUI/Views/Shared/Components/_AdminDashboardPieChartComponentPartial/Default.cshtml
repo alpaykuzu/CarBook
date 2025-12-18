@@ -1,0 +1,54 @@
+﻿<div class="col-lg-4">
+    <div class="card">
+        <div class="card-body">
+            <div class="dropdown float-right position-relative">
+                <a href="#" class="dropdown-toggle h4 text-muted" data-toggle="dropdown"
+                   aria-expanded="false">
+                    <i class="mdi mdi-dots-vertical"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#" class="dropdown-item">Detaylar</a></li>
+                </ul>
+            </div>
+
+            <h4 class="card-title d-inline-block">Gelir Dağılımı</h4>
+
+            <div style="height:260px">
+                <canvas id="revenuePieChart"></canvas>
+            </div>
+
+            <div class="row text-center mt-4">
+                <div class="col-6">
+                    <h4>₺ 7.841</h4>
+                    <p class="text-muted mb-0">Toplam Gelir</p>
+                </div>
+                <div class="col-6">
+                    <h4>17</h4>
+                    <p class="text-muted mb-0">Aktif Kiralama</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    new Chart(document.getElementById('revenuePieChart'), {
+        type: 'pie',
+        data: {
+            labels: ['Saatlik', 'Günlük', 'Haftalık'],
+            datasets: [{
+                data: [1840, 3920, 2081], 
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
