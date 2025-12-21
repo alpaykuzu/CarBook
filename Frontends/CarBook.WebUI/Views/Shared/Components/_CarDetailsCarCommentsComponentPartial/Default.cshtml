@@ -1,0 +1,95 @@
+﻿@model List<ResultReviewDto>
+
+<div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab">
+    <div class="row">
+        <div class="col-md-7">
+            <h3 class="head">@Model.Count Değerlendirme</h3>
+
+            @if (Model.Count == 0)
+            {
+                <p>Bu araç için henüz bir değerlendirme yapılmamış.</p>
+            }
+            else
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="review d-flex">
+                        <div class="user-img" style="background-image: url(@(string.IsNullOrEmpty(item.CustomerImage) ? "/carbook-master/images/person_1.jpg" : item.CustomerImage))"></div>
+                        <div class="desc">
+                            <h4>
+                                <span class="text-left">@item.CustomerName</span>
+                                <span class="text-right">@item.ReviewDate.ToString("dd MMMM yyyy")</span>
+                            </h4>
+                            <p class="star">
+                                <span>
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= item.Rating)
+                                        {
+                                            <i class="ion-ios-star"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="ion-ios-star-outline"></i>
+                                        }
+                                    }
+                                </span>
+                                <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                            </p>
+                            <p>@item.Comment</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+        <div class="col-md-5">
+            <div class="rating-wrap">
+                <h3 class="head">Değerlendirme Özeti</h3>
+                <div class="wrap">
+                    @{
+                        // Puan dağılımını basitçe hesaplamak için:
+                        var fiveStars = Model.Count(x => x.Rating == 5);
+                        var fourStars = Model.Count(x => x.Rating == 4);
+                        var threeStars = Model.Count(x => x.Rating == 3);
+                    }
+                    <p class="star">
+                        <span>
+                            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i>
+                            (100%)
+                        </span>
+                        <span>@fiveStars Değerlendirme</span>
+                    </p>
+                    <p class="star">
+                        <span>
+                            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i>
+                            (80%)
+                        </span>
+                        <span>@fourStars Değerlendirme</span>
+                    </p>
+                    <p class="star">
+                        <span>
+                            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+                            (60%)
+                        </span>
+                        <span>@threeStars Değerlendirme</span>
+                    </p>
+                    <p class="star">
+                        <span>
+                            <i class="ion-ios-star"></i><i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+                            (40%)
+                        </span>
+                        <span>0 Değerlendirme</span>
+                    </p>
+                    <p class="star">
+                        <span>
+                            <i class="ion-ios-star"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i><i class="ion-ios-star-outline"></i>
+                            (20%)
+                        </span>
+                        <span>0 Değerlendirme</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

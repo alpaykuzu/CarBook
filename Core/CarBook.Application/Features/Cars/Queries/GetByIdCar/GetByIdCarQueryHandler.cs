@@ -1,5 +1,6 @@
 ﻿using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace CarBook.Application.Features.Cars.Queries.GetByIdCar
         }
         public async Task<GetByIdCarQueryResponse> Handle(GetByIdCarQueryRequest query)
         {
-            var car = await _repository.GetByIdAsync(query.Id);
+            var car = await _repository.GetQueryable().Include(b => b.Brand).Where(q => q.CarID == query.Id).FirstOrDefaultAsync();
             if (car is null)
                 return null;
 
@@ -26,6 +27,7 @@ namespace CarBook.Application.Features.Cars.Queries.GetByIdCar
             {
                 CarID = car.CarID,
                 BrandID = car.BrandID,
+                BrandName = car.Brand.Name,
                 Model = car.Model,
                 CoverImageUrl = car.CoverImageUrl,
                 Km = car.Km,

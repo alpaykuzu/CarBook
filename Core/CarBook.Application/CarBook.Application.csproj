@@ -17,4 +17,10 @@
     <ProjectReference Include="..\CarBook.Domain\CarBook.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Reviews\Commands\CreateReview\" />
+    <Folder Include="Features\Reviews\Commands\RemoveReview\" />
+    <Folder Include="Features\Reviews\Commands\UpdateReview\" />
+  </ItemGroup>
+
 </Project>
