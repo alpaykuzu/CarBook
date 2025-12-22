@@ -4,6 +4,7 @@ using CarBook.Application.Features.Locations.Commands.UpdateLocation;
 using CarBook.Application.Features.Locations.Queries.GetAllLocation;
 using CarBook.Application.Features.Locations.Queries.GetByIdLocation;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +29,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdLocationQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateLocation([FromBody] CreateLocationCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateLocation([FromBody] UpdateLocationCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveLocation(int id)
         {

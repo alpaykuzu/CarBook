@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.Reviews.Queries.GetReviewsByCar;
+﻿using CarBook.Application.Features.Reviews.Commands.CreateReview;
+using CarBook.Application.Features.Reviews.Queries.GetReviewsByCar;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,12 @@ namespace CarBook.WebApi.Controllers
         {
             var result = await mediator.Send(new GetReviewsByCarQueryRequest(carID));
             return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateReview([FromBody] CreateReviewCommandRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
         }
     }
 }
