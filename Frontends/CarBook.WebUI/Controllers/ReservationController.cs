@@ -23,7 +23,7 @@ namespace CarBook.WebUI.Controllers
             ViewBag.v2 = "Araç Rezervasyon Formu";
             ViewBag.carID = id;
 
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Locations/GetAllLocation");
 
             if (response.IsSuccessStatusCode)
@@ -44,7 +44,7 @@ namespace CarBook.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(CreateReservationDto createReservationDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createReservationDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Hubs;
 using CarBook.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace CarBook.Application.Features.Brands.Commands.CreateBrand
     public class CreateBrandCommandHandler
     {
         private readonly IRepository<Brand> _repository;
+        private readonly IStatisticsHubService _statisticsHubService;
 
-        public CreateBrandCommandHandler(IRepository<Brand> repository)
+        public CreateBrandCommandHandler(IRepository<Brand> repository, IStatisticsHubService statisticsHubService)
         {
             _repository = repository;
+            _statisticsHubService = statisticsHubService;
         }
         public async Task Handle(CreateBrandCommandRequest request)
         {
@@ -23,6 +26,8 @@ namespace CarBook.Application.Features.Brands.Commands.CreateBrand
                 Name = request.Name,
             };
             await _repository.CreateAsync(brand);
+            var value = await _repository.GetCountAsync();
+            await _statisticsHubService.SendBrandCountAsync(value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CarBook.WebUI.Controllers
         {
             ViewBag.v1 = "Araçlarımız";
             ViewBag.v2 = "Aracınızı Seçiniz";
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Cars/GetAllCarWithPricing/Günlük");
 
             if (response.IsSuccessStatusCode)

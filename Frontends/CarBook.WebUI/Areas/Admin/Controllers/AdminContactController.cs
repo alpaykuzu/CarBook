@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.ContactDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminContact")]
     public class AdminContactController : Controller
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Contacts/GetAllContact");
 
             if (response.IsSuccessStatusCode)
@@ -32,7 +34,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveContact/{id}")]
         public async Task<IActionResult> RemoveContact(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Contacts/RemoveContact/{id}");
             if (response.IsSuccessStatusCode)
             {

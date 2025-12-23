@@ -1,6 +1,7 @@
 ﻿using CarBook.Application.Interfaces;
 using CarBook.Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,13 @@ namespace CarBook.Application.Features.Authors.Queries.GetAllAuthor
 
         public async Task<List<GetAllAuthorQueryResponse>> Handle(GetAllAuthorQueryRequest request, CancellationToken cancellationToken)
         {
-            var authors = await _repository.GetAllAsync();
+            var authors = await _repository.GetQueryable()
+                .Include(u => u.AppUser).ToListAsync();
             return authors.Select(a => new GetAllAuthorQueryResponse
             {
                 AuthorID = a.AuthorID,
-                Name = a.Name,
+                AppUserID = a.AppUserID,
+                Name = $"{a.AppUser.Name} {a.AppUser.Surname}",
                 ImageUrl = a.ImageUrl,
                 Description = a.Description
             }).ToList();

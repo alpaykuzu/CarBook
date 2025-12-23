@@ -20,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Locations/GetAllLocation");
 
             if (response.IsSuccessStatusCode)
@@ -41,7 +41,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateLocation")]
         public async Task<IActionResult> CreateLocation(CreateLocationDto createLocationDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createLocationDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -56,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveLocation/{id}")]
         public async Task<IActionResult> RemoveLocation(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Locations/RemoveLocation/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -69,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateLocation(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var responseLocation = await client.GetAsync($"https://localhost:7131/api/Locations/GetByIdLocation/{id}");
 
             if (responseLocation.IsSuccessStatusCode)
@@ -84,7 +84,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("UpdateLocation/{id}")]
         public async Task<IActionResult> UpdateLocation(UpdateLocationDto updateLocationDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateLocationDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

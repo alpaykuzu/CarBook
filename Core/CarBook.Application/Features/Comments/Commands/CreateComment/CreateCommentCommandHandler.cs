@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Hubs;
 using CarBook.Domain.Entities;
 using MediatR;
 using System;
@@ -12,10 +13,12 @@ namespace CarBook.Application.Features.Comments.Commands.CreateComment
     public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommandRequest>
     {
         private readonly IRepository<Comment> _repository;
+        private readonly IStatisticsHubService _statisticsHubService;
 
-        public CreateCommentCommandHandler(IRepository<Comment> repository)
+        public CreateCommentCommandHandler(IRepository<Comment> repository, IStatisticsHubService statisticsHubService)
         {
             _repository = repository;
+            _statisticsHubService = statisticsHubService;
         }
 
         public async Task Handle(CreateCommentCommandRequest request, CancellationToken cancellationToken)
@@ -29,6 +32,7 @@ namespace CarBook.Application.Features.Comments.Commands.CreateComment
                 CreatedDate = request.CreatedDate
             };
             await _repository.CreateAsync(comment);
+            await _statisticsHubService.SendMostBlogWithCommentUpdateNotification();
         }
     }
 }

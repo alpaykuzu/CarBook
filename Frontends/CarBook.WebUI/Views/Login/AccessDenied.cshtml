@@ -1,0 +1,54 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <title>Erişim Engellendi | CarBook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="~/Admin/vertical/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/vertical/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Admin/vertical/assets/css/theme.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        body { background-color: #f8f9fa; }
+        .error-box { text-align: center; margin-top: 100px; }
+        .error-icon { font-size: 100px; color: #f0643b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="error-box shadow-lg p-5 bg-white rounded">
+                    <i class="mdi mdi-lock-alert error-icon"></i>
+                    <h3 class="mb-4">Erişim Yetkiniz Yok!</h3>
+                    <p class="text-muted mb-5">
+                        Üzgünüz, bu sayfayı görüntülemek için gerekli yetkilere sahip değilsiniz.
+                        Lütfen yönetici ile iletişime geçin veya yetkili bir hesapla giriş yapın.
+                    </p>
+                    <div class="mt-4">
+                        <a href="/Default/Index" class="btn btn-primary waves-effect waves-light">
+                            <i class="mdi mdi-home mr-1"></i> Ana Sayfaya Dön
+                        </a>
+
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <a href="/Login/Index" class="btn btn-success waves-effect waves-light ml-2">
+                                <i class="mdi mdi-login mr-1"></i> Hemen Giriş Yap
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Login/Index" class="btn btn-outline-secondary waves-effect waves-light ml-2">
+                                Farklı Hesapla Giriş Yap
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

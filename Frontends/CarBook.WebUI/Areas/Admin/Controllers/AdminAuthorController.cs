@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.AuthorDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminAuthor")]
     public class AdminAuthorController : Controller
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Authors/GetAllAuthor");
 
             if (response.IsSuccessStatusCode)
@@ -39,7 +41,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateAuthor")]
         public async Task<IActionResult> CreateAuthor(CreateAuthorDto createAuthorDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createAuthorDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -54,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveAuthor/{id}")]
         public async Task<IActionResult> RemoveAuthor(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Authors/RemoveAuthor/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -67,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateAuthor(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var responseAuthor = await client.GetAsync($"https://localhost:7131/api/Authors/GetByIdAuthor/{id}");
 
             if (responseAuthor.IsSuccessStatusCode)
@@ -82,7 +84,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("UpdateAuthor/{id}")]
         public async Task<IActionResult> UpdateAuthor(UpdateAuthorDto updateAuthorDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateAuthorDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

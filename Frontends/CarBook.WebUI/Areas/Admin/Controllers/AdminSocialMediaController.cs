@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.SocialMediaDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminSocialMedia")]
     public class AdminSocialMediaController : Controller
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/SocialMedias/GetAllSocialMedia");
 
             if (response.IsSuccessStatusCode)
@@ -39,7 +41,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateSocialMedia")]
         public async Task<IActionResult> CreateSocialMedia(CreateSocialMediaDto createSocialMediaDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createSocialMediaDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -54,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveSocialMedia/{id}")]
         public async Task<IActionResult> RemoveSocialMedia(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/SocialMedias/RemoveSocialMedia/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -67,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateSocialMedia(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var responseSocialMedia = await client.GetAsync($"https://localhost:7131/api/SocialMedias/GetByIdSocialMedia/{id}");
 
             if (responseSocialMedia.IsSuccessStatusCode)
@@ -82,7 +84,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("UpdateSocialMedia/{id}")]
         public async Task<IActionResult> UpdateSocialMedia(UpdateSocialMediaDto updateSocialMediaDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateSocialMediaDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

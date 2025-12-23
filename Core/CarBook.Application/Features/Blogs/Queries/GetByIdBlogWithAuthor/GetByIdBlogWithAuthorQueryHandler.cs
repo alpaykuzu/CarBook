@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces.BlogInterfaces;
+using CarBook.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace CarBook.Application.Features.Blogs.Queries.GetByIdBlogWithAuthor
                 Title = blogs.Title,
                 Description = blogs.Description,
                 AuthorID = blogs.AuthorID,
-                AuthorName = blogs.Author.Name,
+                AuthorName = $"{blogs.Author.AppUser.Name} {blogs.Author.AppUser.Surname}",
                 CategoryID = blogs.CategoryID,
                 CategoryName = blogs.Category.Name,
                 CoverImageUrl = blogs.CoverImageUrl,

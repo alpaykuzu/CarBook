@@ -4,6 +4,7 @@ using CarBook.Application.Features.Features.Commands.UpdateFeature;
 using CarBook.Application.Features.Features.Queries.GetAllFeature;
 using CarBook.Application.Features.Features.Queries.GetByIdFeature;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +29,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdFeatureQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateFeature([FromBody] CreateFeatureCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateFeature([FromBody] UpdateFeatureCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveFeature(int id)
         {

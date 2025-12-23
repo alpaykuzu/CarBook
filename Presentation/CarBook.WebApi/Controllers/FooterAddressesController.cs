@@ -4,6 +4,7 @@ using CarBook.Application.Features.FooterAddresses.Commands.UpdateFooterAddress;
 using CarBook.Application.Features.FooterAddresses.Queries.GetAllFooterAddress;
 using CarBook.Application.Features.FooterAddresses.Queries.GetByIdFooterAddress;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +29,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdFooterAddressQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateFooterAddress([FromBody] CreateFooterAddressCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateFooterAddress([FromBody] UpdateFooterAddressCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveFooterAddress(int id)
         {

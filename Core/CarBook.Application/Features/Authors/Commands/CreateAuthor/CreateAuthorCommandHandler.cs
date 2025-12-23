@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Hubs;
 using CarBook.Domain.Entities;
 using MediatR;
 using System;
@@ -12,21 +13,25 @@ namespace CarBook.Application.Features.Authors.Commands.CreateAuthor
     public class CreateAuthorCommandHandler : IRequestHandler<CreateAuthorCommandRequest>
     {
         private readonly IRepository<Author> _repository;
+        private readonly IStatisticsHubService _statisticsHubService;
 
-        public CreateAuthorCommandHandler(IRepository<Author> repository)
+        public CreateAuthorCommandHandler(IRepository<Author> repository, IStatisticsHubService statisticsHubService)
         {
             _repository = repository;
+            _statisticsHubService = statisticsHubService;
         }
 
         public async Task Handle(CreateAuthorCommandRequest request, CancellationToken cancellationToken)
         {
             Author author = new Author
             {
-                Name = request.Name,
+                AppUserID = request.AppUserID,
                 ImageUrl = request.ImageUrl,
                 Description = request.Description
             };
             await _repository.CreateAsync(author);
+            var value = await _repository.GetCountAsync();
+            await _statisticsHubService.SendAuthorCountAsync(value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Hubs;
 using CarBook.Domain.Entities;
 using MediatR;
 using System;
@@ -12,9 +13,11 @@ namespace CarBook.Application.Features.Blogs.Commands.CreateBlog
     public class CreateBlogCommandHandler : IRequestHandler<CreateBlogCommandRequest>
     {
         private readonly IRepository<Blog> _repository;
-        public CreateBlogCommandHandler(IRepository<Blog> repository)
+        private readonly IStatisticsHubService _statisticsHubService;
+        public CreateBlogCommandHandler(IRepository<Blog> repository, IStatisticsHubService statisticsHubService)
         {
             _repository = repository;
+            _statisticsHubService = statisticsHubService;
         }
         public async Task Handle(CreateBlogCommandRequest request, CancellationToken cancellationToken)
         {
@@ -23,9 +26,13 @@ namespace CarBook.Application.Features.Blogs.Commands.CreateBlog
                 Title = request.Title,
                 AuthorID = request.AuthorID,
                 CategoryID = request.CategoryID,
-                CoverImageUrl = request.CoverImageUrl
+                CoverImageUrl = request.CoverImageUrl,
+                Description = request.Description,
+                CreatedDate = request.CreatedDate,
             };
             await _repository.CreateAsync(blog);
+            var value = await _repository.GetCountAsync();
+            await _statisticsHubService.SendBlogCountAsync(value);
         }
     }
 }

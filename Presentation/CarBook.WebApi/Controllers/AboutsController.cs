@@ -3,6 +3,7 @@ using CarBook.Application.Features.Abouts.Commands.RemoveAbout;
 using CarBook.Application.Features.Abouts.Commands.UpdateAbout;
 using CarBook.Application.Features.Abouts.Queries.GetAllAbout;
 using CarBook.Application.Features.Abouts.Queries.GetByIdAbout;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,18 +38,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _getByIdAboutQueryHandler.Handle(new GetByIdAboutQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateAbout([FromBody] CreateAboutCommandRequest request)
         {
             await _createAboutCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateAbout([FromBody] UpdateAboutCommandRequest request)
         {
             await _updateAboutCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveAbout(int id)
         {

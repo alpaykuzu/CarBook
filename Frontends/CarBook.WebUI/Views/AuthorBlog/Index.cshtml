@@ -1,0 +1,140 @@
+﻿@model List<ResultBlogWithAuthorDto>
+
+@{
+    ViewData["Title"] = "Bloglarım";
+    Layout = "~/Views/UILayout/Index.cshtml";
+    int count = 0;
+}
+
+<style>
+    .blog-list-card {
+        border: none;
+        box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    .table thead th {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #1089ff;
+        color: #343a40;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    .blog-img {
+        width: 60px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .badge-category {
+        background-color: rgba(16, 137, 255, 0.1);
+        color: #1089ff;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+    }
+
+    .btn-action {
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 13px;
+        transition: all 0.3s;
+    }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card blog-list-card">
+                <div class="card-header bg-white py-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-1" style="font-weight: 800; color: #1a1a1a;">Kaleminizden Dökülenler</h3>
+                            <p class="text-muted mb-0">Toplam <strong>@Model.Count</strong> adet blog içeriğiniz bulunmaktadır.</p>
+                        </div>
+                        <a href="/AuthorBlog/CreateBlog/@ViewBag.AuthorID" class="btn btn-primary px-4 py-2" style="border-radius: 8px; font-weight: 600;">
+                            <i class="ion-ios-add-circle mr-2"></i> Yeni Blog Yazısı Yaz
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="pl-4">#</th>
+                                    <th>Görsel</th>
+                                    <th>Başlık</th>
+                                    <th>Kategori</th>
+                                    <th>Yayınlanma Tarihi</th>
+                                    <th class="text-center">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td class="pl-4 font-weight-bold">@count</td>
+                                        <td>
+                                            <img src="@item.CoverImageUrl" class="blog-img" alt="Blog Cover">
+                                        </td>
+                                        <td>
+                                            <span style="font-weight: 600; color: #444; display: block; max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                @item.Title
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span class="badge-category">@item.CategoryName</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted small">
+                                                <i class="ion-ios-calendar mr-1"></i> @item.CreatedDate.ToString("dd MMM yyyy")
+                                            </span>
+                                        </td>
+                                        <td class="text-center pr-4">
+                                            <div class="btn-group">
+                                                <a href="/BlogDetail/Index/@item.BlogID" class="btn btn-outline-success btn-sm btn-action mr-2" title="Sitede Önizle">
+                                                    <i class="ion-ios-eye"></i> Görüntüle
+                                                </a>
+                                                <a href="/AuthorBlog/UpdateBlog/@item.BlogID" class="btn btn-outline-warning btn-sm btn-action mr-2" title="Düzenle">
+                                                    <i class="ion-ios-create"></i> Düzenle
+                                                </a>
+                                                <a href="/AuthorBlog/RemoveBlog/@item.BlogID" class="btn btn-outline-danger btn-sm btn-action"
+                                                   onclick="return confirm('Bu blog yazısını silmek istediğinizden emin misiniz?')" title="Sil">
+                                                    <i class="ion-ios-trash"></i> Sil
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Count == 0)
+{
+    <div class="text-center py-5">
+        <img src="https://cdn-icons-png.flaticon.com/512/2034/2034913.png" style="width: 100px; opacity: 0.5;" alt="Empty">
+        <h4 class="mt-4 text-muted">Henüz hiç blog yazmamışsınız.</h4>
+        <p>Hemen ilk yazınızı paylaşarak dünyayı aydınlatın!</p>
+    </div>
+}

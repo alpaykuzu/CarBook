@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.BannerDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminBanner")]
     public class AdminBannerController : Controller
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Banners/GetAllBanner");
 
             if (response.IsSuccessStatusCode)
@@ -39,7 +41,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateBanner")]
         public async Task<IActionResult> CreateBanner(CreateBannerDto createBannerDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createBannerDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -54,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveBanner/{id}")]
         public async Task<IActionResult> RemoveBanner(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Banners/RemoveBanner/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -67,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateBanner(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var responseBanner = await client.GetAsync($"https://localhost:7131/api/Banners/GetByIdBanner/{id}");
 
             if (responseBanner.IsSuccessStatusCode)
@@ -82,7 +84,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("UpdateBanner/{id}")]
         public async Task<IActionResult> UpdateBanner(UpdateBannerDto updateBannerDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateBannerDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

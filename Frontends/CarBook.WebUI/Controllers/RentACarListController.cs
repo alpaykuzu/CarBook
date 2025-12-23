@@ -23,7 +23,7 @@ namespace CarBook.WebUI.Controllers
             ViewBag.time_off = TempData["time_off"];
             ViewBag.locationID = TempData["locationID"];
 
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync($"https://localhost:7131/api/RentACars/GetByLocationRentACar?locationID={ViewBag.locationID}");
 
             if (response.IsSuccessStatusCode)

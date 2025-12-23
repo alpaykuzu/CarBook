@@ -10,7 +10,7 @@ namespace CarBook.Application.Tools
     {
         public const string Issuer = "https://localhost";
         public const string Audience = "https://localhost";
-        public const int ExpirationMinutes = 3;
+        public const int ExpirationMinutes = 10;
         public const string SecurityKey = "CarBookSecurityKey*123456_123456*"; 
     }
 }

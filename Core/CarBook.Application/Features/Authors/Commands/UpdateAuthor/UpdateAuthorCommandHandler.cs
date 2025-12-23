@@ -23,7 +23,7 @@ namespace CarBook.Application.Features.Authors.Commands.UpdateAuthor
             if (author == null)
                 throw new Exception("Author not found");
             
-            author.Name = request.Name;
+            author.AuthorID = request.AuthorID;
             author.ImageUrl = request.ImageUrl;
             author.Description = request.Description;
             await _repository.UpdateAsync(author);

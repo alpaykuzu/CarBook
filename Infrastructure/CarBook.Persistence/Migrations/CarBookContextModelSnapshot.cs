@@ -110,6 +110,9 @@ namespace CarBook.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorID"));
 
+                    b.Property<int>("AppUserID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -118,11 +121,9 @@ namespace CarBook.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("AuthorID");
+
+                    b.HasIndex("AppUserID");
 
                     b.ToTable("Authors");
                 });
@@ -802,6 +803,17 @@ namespace CarBook.Persistence.Migrations
                     b.Navigation("AppRole");
                 });
 
+            modelBuilder.Entity("CarBook.Domain.Entities.Author", b =>
+                {
+                    b.HasOne("CarBook.Domain.Entities.AppUser", "AppUser")
+                        .WithMany("Authors")
+                        .HasForeignKey("AppUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("CarBook.Domain.Entities.Blog", b =>
                 {
                     b.HasOne("CarBook.Domain.Entities.Author", "Author")
@@ -978,6 +990,11 @@ namespace CarBook.Persistence.Migrations
             modelBuilder.Entity("CarBook.Domain.Entities.AppRole", b =>
                 {
                     b.Navigation("AppUsers");
+                });
+
+            modelBuilder.Entity("CarBook.Domain.Entities.AppUser", b =>
+                {
+                    b.Navigation("Authors");
                 });
 
             modelBuilder.Entity("CarBook.Domain.Entities.Author", b =>

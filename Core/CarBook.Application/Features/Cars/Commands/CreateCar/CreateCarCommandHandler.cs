@@ -15,9 +15,9 @@ namespace CarBook.Application.Features.Cars.Commands.CreateCar
     public class CreateCarCommandHandler
     {
         private readonly IRepository<Car> _repository;
-        private readonly ICarHubService _carHubService;
+        private readonly IStatisticsHubService _carHubService;
 
-        public CreateCarCommandHandler(IRepository<Car> repository, ICarHubService carHubService)
+        public CreateCarCommandHandler(IRepository<Car> repository, IStatisticsHubService carHubService)
         {
             _repository = repository;
             _carHubService = carHubService;
@@ -39,6 +39,11 @@ namespace CarBook.Application.Features.Cars.Commands.CreateCar
             await _repository.CreateAsync(car);
             var value = await _repository.GetCountAsync();
             await _carHubService.SendCarCountAsync(value);
+            await _carHubService.SendMostBrandUpdateNotification();
+            await _carHubService.SendCarCountByKmUpdateNotification();
+            await _carHubService.SendCarCountByFuelUpdateNotification();
+            await _carHubService.SendCarModelAndBrandMaxOrMinDailyPriceUpdateNotification();
+            await _carHubService.SendAutomaticCarCountUpdateNotification();
         }
     }
 }

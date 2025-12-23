@@ -25,7 +25,7 @@ namespace CarBook.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddComment(CreateCommentDto createCommentDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
 
             var jsonData = JsonConvert.SerializeObject(createCommentDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");

@@ -6,6 +6,7 @@ using CarBook.Application.Features.Cars.Queries.GetByIdCar;
 using CarBook.Application.Features.Cars.Queries.GetCarWithBrand;
 using CarBook.Application.Features.Cars.Queries.GetCarWithPricing;
 using CarBook.Application.Features.Cars.Queries.GetLastCarWithBrand;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -60,18 +61,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _getLastCarWithBrandQueryHandler.Handle(new GetLastCarWithBrandQueryRequest(number)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateCar([FromBody] CreateCarCommandRequest request)
         {
             await _createCarCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateCar([FromBody] UpdateCarCommandRequest request)
         {
             await _updateCarCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveCar(int id)
         {

@@ -1,4 +1,5 @@
 ﻿using CarBook.Application.Interfaces.BlogInterfaces;
+using CarBook.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace CarBook.Application.Features.Blogs.Queries.GetLastBlogsWithAuthors
                 Title = b.Title,
                 Description = b.Description,
                 AuthorID = b.AuthorID,
-                AuthorName = b.Author.Name,
+                AuthorName = $"{b.Author.AppUser.Name} {b.Author.AppUser.Surname}",
                 CategoryID = b.CategoryID,
                 CategoryName = b.Category.Name,
                 CoverImageUrl = b.CoverImageUrl,

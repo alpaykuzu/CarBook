@@ -3,6 +3,7 @@ using CarBook.Application.Features.Categories.Commands.RemoveCategory;
 using CarBook.Application.Features.Categories.Commands.UpdateCategory;
 using CarBook.Application.Features.Categories.Queries.GetAllCategory;
 using CarBook.Application.Features.Categories.Queries.GetByIdCategory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,18 +37,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _getByIdCategoryQueryHandler.Handle(new GetByIdCategoryQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommandRequest request)
         {
             await _createCategoryCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommandRequest request)
         {
             await _updateCategoryCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveCategory(int id)
         {

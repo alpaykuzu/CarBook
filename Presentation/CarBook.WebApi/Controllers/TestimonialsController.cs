@@ -4,6 +4,7 @@ using CarBook.Application.Features.Testimonials.Commands.UpdateTestimonial;
 using CarBook.Application.Features.Testimonials.Queries.GetAllTestimonial;
 using CarBook.Application.Features.Testimonials.Queries.GetByIdTestimonial;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +29,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdTestimonialQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTestimonial([FromBody] CreateTestimonialCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateTestimonial([FromBody] UpdateTestimonialCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveTestimonial(int id)
         {

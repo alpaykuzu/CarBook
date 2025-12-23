@@ -1,11 +1,13 @@
 ﻿using CarBook.Dto.AuthorDtos;
 using CarBook.Dto.Statistics;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminStatistics")]
     public class AdminStatisticsController : Controller
@@ -19,7 +21,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
 
             //Car Count
             var responseCar = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCount");
@@ -102,7 +104,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             }
 
             //Automatic Car Count
-            var responseAuto = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByTransmission/Automatic");
+            var responseAuto = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByTransmission/Otomatik");
 
             if (responseAuto.IsSuccessStatusCode)
             {
@@ -132,7 +134,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             }
 
             //Car Count By Km
-            var responseCarCountByKm = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByKm/20000");
+            var responseCarCountByKm = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByKm/30000");
 
             if (responseCarCountByKm.IsSuccessStatusCode)
             {
@@ -142,7 +144,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             }
 
             //Gasoline Car Count
-            var responseCarCountGasoline = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Gasoline");
+            var responseCarCountGasoline = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Benzin");
 
             if (responseCarCountGasoline.IsSuccessStatusCode)
             {
@@ -152,7 +154,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             }
 
             //Diesel Car Count
-            var responseCarCountDiesel = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Diesel");
+            var responseCarCountDiesel = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByFuel/Dizel");
 
             if (responseCarCountDiesel.IsSuccessStatusCode)
             {
@@ -185,6 +187,69 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
             }
 
             return View();
+        }
+        [HttpGet]
+        [Route("GetUpdatedPricing")]
+        public async Task<JsonResult> GetUpdatedPricing(string type)
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync($"https://localhost:7131/api/Statistics/GetAvarageCarPricing/{type}");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetAutomaticCarCount")]
+        public async Task<JsonResult> GetAutomaticCarCount()
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByTransmission/Otomatik");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetMostBrandWithCar")]
+        public async Task<JsonResult> GetMostBrandWithCar()
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync("https://localhost:7131/api/Statistics/GetMostBrandWithCar");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetMostBlogWithComment")]
+        public async Task<JsonResult> GetMostBlogWithComment()
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync("https://localhost:7131/api/Statistics/GetMostBlogWithComment");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetCarCountByKm")]
+        public async Task<JsonResult> GetCarCountByKm()
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync("https://localhost:7131/api/Statistics/GetCarCountByKm/30000");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetCarCountByFuel")]
+        public async Task<JsonResult> GetCarCountByFuel(string fuel)
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync($"https://localhost:7131/api/Statistics/GetCarCountByFuel/{fuel}");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
+        }
+        [HttpGet]
+        [Route("GetCarModelAndBrandMaxOrMinDailyPrice")]
+        public async Task<JsonResult> GetCarModelAndBrandMaxOrMinDailyPrice(bool check)
+        {
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync($"https://localhost:7131/api/Statistics/GetCarByCarPricing?PricingType=Günlük&IsMax={check}");
+            var jsonData = await response.Content.ReadAsStringAsync();
+            return Json(jsonData);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.ServiceDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminService")]
     public class AdminServiceController : Controller
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Services/GetAllService");
 
             if (response.IsSuccessStatusCode)
@@ -39,7 +41,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateService")]
         public async Task<IActionResult> CreateService(CreateServiceDto createServiceDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createServiceDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -54,7 +56,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveService/{id}")]
         public async Task<IActionResult> RemoveService(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Services/RemoveService/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -67,7 +69,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateService(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var responseService = await client.GetAsync($"https://localhost:7131/api/Services/GetByIdService/{id}");
 
             if (responseService.IsSuccessStatusCode)
@@ -82,7 +84,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("UpdateService/{id}")]
         public async Task<IActionResult> UpdateService(UpdateServiceDto updateServiceDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateServiceDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

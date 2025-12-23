@@ -4,6 +4,7 @@ using CarBook.Dto.CarDtos;
 using CarBook.Dto.CarFeatureDtos;
 using CarBook.Dto.FeatureDtos;
 using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -11,6 +12,7 @@ using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminCarFeature")]
     public class AdminCarFeatureController : Controller
@@ -28,7 +30,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         {
             ViewBag.carID = id;
             carID = id;
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync($"https://localhost:7131/api/CarFeatures/GetCarFeatureByCar/{id}");
 
             if (response.IsSuccessStatusCode)
@@ -43,7 +45,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCarFeature([FromBody] UpdateCarFeatureDto updateFeatureDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
 
             var jsonData = JsonConvert.SerializeObject(updateFeatureDto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -64,7 +66,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         {
             ViewBag.carID = id;
             ViewBag.available = true;
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Features/GetAllFeature");
 
             if (response.IsSuccessStatusCode)
@@ -87,7 +89,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("CreateCarFeature/{id}")]
         public async Task<IActionResult> CreateCarFeature(CreateCarFeatureDto createCarFeatureDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createCarFeatureDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -107,7 +109,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveCarFeature/{id}")]
         public async Task<IActionResult> RemoveCarFeature(int id, int carId)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync(
                 $"https://localhost:7131/api/CarFeatures/RemoveCarFeature/{id}"
             );

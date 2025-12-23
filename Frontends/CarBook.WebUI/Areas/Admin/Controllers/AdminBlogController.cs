@@ -1,11 +1,13 @@
 ﻿using CarBook.Dto.BlogDtos;
 using CarBook.Dto.CommentDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminBlog")]
     public class AdminBlogController : Controller
@@ -19,7 +21,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Blogs/GetLastNBlog");
 
             if (response.IsSuccessStatusCode)
@@ -33,7 +35,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         [Route("RemoveBlog/{id}")]
         public async Task<IActionResult> RemoveBlog(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Blogs/RemoveBlog/{id}");
             if (response.IsSuccessStatusCode)
             {

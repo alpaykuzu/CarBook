@@ -3,6 +3,7 @@ using CarBook.Application.Features.Contacts.Commands.RemoveContact;
 using CarBook.Application.Features.Contacts.Commands.UpdateContact;
 using CarBook.Application.Features.Contacts.Queries.GetAllContact;
 using CarBook.Application.Features.Contacts.Queries.GetByIdContact;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,18 +37,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _getByIdContactQueryHandler.Handle(new GetByIdContactQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateContact([FromBody] CreateContactCommandRequest request)
         {
             await _createContactCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateContact([FromBody] UpdateContactCommandRequest request)
         {
             await _updateContactCommandHandler.Handle(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveContact(int id)
         {

@@ -28,6 +28,8 @@ namespace CarBook.Application.Features.Blogs.Commands.UpdateBlog
             blog.AuthorID = request.AuthorID;
             blog.CategoryID = request.CategoryID;
             blog.CoverImageUrl = request.CoverImageUrl;
+            blog.CreatedDate = request.CreatedDate;
+            blog.Description = request.Description;
             await _repository.UpdateAsync(blog);
         }
     }

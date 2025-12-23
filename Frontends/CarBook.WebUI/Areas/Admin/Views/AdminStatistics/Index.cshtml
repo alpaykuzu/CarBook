@@ -1,8 +1,10 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "İstatistikler";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <div class="page-content">
     <div class="container-fluid">
@@ -16,14 +18,12 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 text-white">
-                                    @ViewBag.CarCount
-                                </h2>
+                                <h2 class="d-flex align-items-center mb-0 text-white" id="carcount">@ViewBag.CarCount</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-success border-success">
@@ -34,14 +34,12 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.LocationCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="locationcount">@ViewBag.LocationCount</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-warning border-warning">
@@ -52,9 +50,7 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.AuthorCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="authorcount">@ViewBag.AuthorCount</h2>
                             </div>
                         </div>
                     </div>
@@ -70,15 +66,14 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.BlogCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="blogcount">@ViewBag.BlogCount</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-primary border-primary">
@@ -89,52 +84,39 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 text-white">
-                                    @ViewBag.BrandCount
-                                </h2>
+                                <h2 class="d-flex align-items-center mb-0 text-white" id="brandcount">@ViewBag.BrandCount</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-success border-success">
                     <div class="card-body">
                         <div class="mb-4">
                             <span class="badge badge-soft-light float-right">Saatlik</span>
-                            <h5 class="card-title mb-0 text-white">Ortalama Kiralama Fiyatı</h5>
+                            <h5 class="card-title mb-0 text-white">Ort. Kiralama Fiyatı</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    ₺ @ViewBag.AvgHourlyCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="avgHourlyCount">₺ @ViewBag.AvgHourlyCount</h2>
                             </div>
-@*                             <div class="col-4 text-right">
-                                <span class="text-white-50">18.71% <i class="mdi mdi-arrow-down"></i></span>
-                            </div> *@
                         </div>
-@* 
-                        <div class="progress badge-soft-light shadow-sm" style="height: 7px;">
-                            <div class="progress-bar bg-light" role="progressbar" style="width: 38%;"></div>
-                        </div> *@
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-warning border-warning">
                     <div class="card-body">
                         <div class="mb-4">
                             <span class="badge badge-soft-light float-right">Günlük</span>
-                            <h5 class="card-title mb-0 text-white">Ortalama Kiralama Fiyatı</h5>
+                            <h5 class="card-title mb-0 text-white">Ort. Kiralama Fiyatı</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    ₺ @ViewBag.AvgDailyCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="avgDailyCount">₺ @ViewBag.AvgDailyCount</h2>
                             </div>
                         </div>
                     </div>
@@ -146,19 +128,18 @@
                     <div class="card-body">
                         <div class="mb-4">
                             <span class="badge badge-soft-light float-right">Haftalık</span>
-                            <h5 class="card-title mb-0 text-white">Ortalama Kiralama Fiyatı</h5>
+                            <h5 class="card-title mb-0 text-white">Ort. Kiralama Fiyatı</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    ₺ @ViewBag.AvgWeeklyCount
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="avgWeeklyCount">₺ @ViewBag.AvgWeeklyCount</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-primary border-primary">
@@ -169,9 +150,7 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 text-white">
-                                    @ViewBag.AutoCount
-                                </h2>
+                                <h2 class="d-flex align-items-center mb-0 text-white" id="autocount">@ViewBag.AutoCount</h2>
                             </div>
                         </div>
                     </div>
@@ -182,32 +161,28 @@
                 <div class="card bg-success border-success">
                     <div class="card-body">
                         <div class="mb-4">
-                            <span class="badge badge-soft-light float-right">En Çok Araca Sahip</span>
+                            <span class="badge badge-soft-light float-right">En Çok Araçlı</span>
                             <h5 class="card-title mb-0 text-white">Marka</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 text-white">
-                                    @ViewBag.MostBrand
-                                </h2>
+                                <h2 class="d-flex align-items-center mb-0 text-white" id="mostbrand">@ViewBag.MostBrand</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-warning border-warning">
                     <div class="card-body">
                         <div class="mb-4">
-                            <span class="badge badge-soft-light float-right">En Çok Yoruma Sahip</span>
+                            <span class="badge badge-soft-light float-right">En Çok Yorumlu</span>
                             <h5 class="card-title mb-0 text-white">Blog</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h5 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.MostBlog
-                                </h5>
+                                <h5 class="d-flex align-items-center text-white mb-0" id="mostblog">@ViewBag.MostBlog</h5>
                             </div>
                         </div>
                     </div>
@@ -218,20 +193,19 @@
                 <div class="card bg-info border-info">
                     <div class="card-body">
                         <div class="mb-4">
-                            <span class="badge badge-soft-light float-right">10.000 Km Altı</span>
+                            <span class="badge badge-soft-light float-right">30.000 Km Altı</span>
                             <h5 class="card-title mb-0 text-white">Araç Sayısı</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.CarCountByKm
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="carcountbykm">@ViewBag.CarCountByKm</h2>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-primary border-primary">
@@ -242,32 +216,28 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center mb-0 text-white">
-                                    @ViewBag.CarCountGasoline
-                                </h2>
+                                <h2 class="d-flex align-items-center mb-0 text-white" id="gasolinecount">@ViewBag.CarCountGasoline</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-success border-success">
                     <div class="card-body">
                         <div class="mb-4">
-                            <span class="badge badge-soft-light float-right">Gaz</span>
+                            <span class="badge badge-soft-light float-right">Dizel</span>
                             <h5 class="card-title mb-0 text-white">Araç Sayısı</h5>
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h2 class="d-flex align-items-center text-white mb-0">
-                                    @ViewBag.CarCountDiesel
-                                </h2>
+                                <h2 class="d-flex align-items-center text-white mb-0" id="dieselcount">@ViewBag.CarCountDiesel</h2>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
 
             <div class="col-md-6 col-xl-3">
                 <div class="card bg-warning border-warning">
@@ -278,8 +248,8 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h4 class="d-flex align-items-center text-white mb-0">
-                                   @ViewBag.CarBrandMax - @ViewBag.CarModelMax
+                                <h4 class="d-flex align-items-center text-white mb-0" id="carmaxprice">
+                                    @ViewBag.CarBrandMax - @ViewBag.CarModelMax
                                 </h4>
                             </div>
                         </div>
@@ -296,7 +266,7 @@
                         </div>
                         <div class="row d-flex align-items-center mb-4">
                             <div class="col-8">
-                                <h4 class="d-flex align-items-center text-white mb-0">
+                                <h4 class="d-flex align-items-center text-white mb-0" id="carminprice">
                                     @ViewBag.CarBrandMin - @ViewBag.CarModelMin
                                 </h4>
                             </div>
@@ -308,3 +278,77 @@
     </div>
 </div>
 
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(() => {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7131/statisticshub")
+                .withAutomaticReconnect()
+                .build();
+
+            connection.start().then(() => {
+                console.log("SignalR: Bağlantı Başarılı.");
+            }).catch((err) => console.error(err));
+
+            // --- 1. Statik Rakam Güncellemeleri (Value bazlı) ---
+            connection.on("ReceiveCarCount", (val) => { updateVal("#carcount", val); });
+            connection.on("ReceiveLocationCount", (val) => { updateVal("#locationcount", val); });
+            connection.on("ReceiveAuthorCount", (val) => { updateVal("#authorcount", val); });
+            connection.on("ReceiveBlogCount", (val) => { updateVal("#blogcount", val); });
+            connection.on("ReceiveBrandCount", (val) => { updateVal("#brandcount", val); });
+
+            // --- 2. Dinamik Bildirim Güncellemeleri (AJAX bazlı) ---
+
+            // Ortalama Fiyatlar
+            connection.on("ReceiveCarPricingUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetUpdatedPricing?type=Saatlik", (d) => "₺ " + parseFloat(JSON.parse(d).avaragePrice).toFixed(2), "#avgHourlyCount");
+                fetchAjax("/Admin/AdminStatistics/GetUpdatedPricing?type=Günlük", (d) => "₺ " + parseFloat(JSON.parse(d).avaragePrice).toFixed(2), "#avgDailyCount");
+                fetchAjax("/Admin/AdminStatistics/GetUpdatedPricing?type=Haftalık", (d) => "₺ " + parseFloat(JSON.parse(d).avaragePrice).toFixed(2), "#avgWeeklyCount");
+            });
+
+            // Otomatik Vites Sayısı
+            connection.on("ReceiveAutomaticCarCountUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetAutomaticCarCount", (d) => JSON.parse(d).carCount, "#autocount");
+            });
+
+            // En Çok Araca Sahip Marka
+            connection.on("ReceiveMostBrandUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetMostBrandWithCar", (d) => JSON.parse(d).brandName, "#mostbrand");
+            });
+
+            // En Çok Yorumlu Blog
+            connection.on("ReceiveMostBlogWithCommentUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetMostBlogWithComment", (d) => JSON.parse(d).blogTitle, "#mostblog");
+            });
+
+            // Km Bazlı Sayım (30k altı)
+            connection.on("ReceiveCarCountByKmUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetCarCountByKm", (d) => JSON.parse(d).carCount, "#carcountbykm");
+            });
+
+            // Yakıt Bazlı Sayımlar
+            connection.on("CarCountByFuelUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetCarCountByFuel?fuel=Benzin", (d) => JSON.parse(d).carCount, "#gasolinecount");
+                fetchAjax("/Admin/AdminStatistics/GetCarCountByFuel?fuel=Dizel", (d) => JSON.parse(d).carCount, "#dieselcount");
+            });
+
+            // Max/Min Fiyatlı Modeller
+            connection.on("ReceiveCarModelAndBrandMaxDailyPriceUpdateNotification", () => {
+                fetchAjax("/Admin/AdminStatistics/GetCarModelAndBrandMaxOrMinDailyPrice?check=true", (d) => { let j = JSON.parse(d); return j.brand + " - " + j.model; }, "#carmaxprice");
+                fetchAjax("/Admin/AdminStatistics/GetCarModelAndBrandMaxOrMinDailyPrice?check=false", (d) => { let j = JSON.parse(d); return j.brand + " - " + j.model; }, "#carminprice");
+            });
+
+            // --- Yardımcı Fonksiyonlar ---
+            function updateVal(id, val) {
+                $(id).fadeOut(200, function() { $(this).text(val).fadeIn(200); });
+            }
+
+            function fetchAjax(url, parseFunc, elementId) {
+                $.get(url, (data) => {
+                    const finalVal = parseFunc(data);
+                    $(elementId).fadeOut(200, function() { $(this).text(finalVal).fadeIn(200); });
+                });
+            }
+        });
+    </script>
+}

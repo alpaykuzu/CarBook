@@ -1,22 +1,83 @@
 ﻿@model List<CarBook.Dto.AboutDtos.ResultAboutDto>
 
-	@foreach (var item in Model)
+@foreach (var item in Model)
 {
-	<section class="ftco-section ftco-about">
-		<div class="container">
-			<div class="row no-gutters">
-				<div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@item.imageUrl);">
-				</div>
-				<div class="col-md-6 wrap-about ftco-animate">
-					<div class="heading-section heading-section-white pl-md-5">
-						<span class="subheading">Hakkımızda</span>
-						<h2 class="mb-4">@item.title</h2>
+    <section class="ftco-section ftco-about ftco-no-pt ftco-no-pb" style="position: relative; overflow: hidden; background: #fff;">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-md-6 d-flex align-items-center">
+                    <div class="img-container w-100" style="padding: 40px 0; position: relative; z-index: 2;">
+                        <div class="img shadow-lg"
+                             style="background-image: url('@item.imageUrl');
+                                        padding-bottom: 85%; /* Orijinal kareye yakın oran */
+                                        background-size: cover;
+                                        background-position: center;
+                                        border-radius: 5px;
+                                        width: 110%; /* Resmin sağa, renkli bölgeye doğru hafif taşması için */
+                                        margin-left: -5%;">
+                        </div>
+                    </div>
+                </div>
 
-						<p>@item.description</p>
-						<p><a href="/RentACar/Index" class="btn btn-primary py-3 px-4">Hemen Araç Kirala</a></p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+                <div class="col-md-6 wrap-about ftco-animate d-flex align-items-center" style="position: relative; z-index: 2;">
+                    <div class="heading-section pl-md-5 py-5 text-white">
+                        <span class="subheading" style="color: rgba(255,255,255,0.8) !important; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 13px;">
+                            HAKKIMIZDA
+                        </span>
+
+                        <h2 class="mb-4" style="color: #ffffff !important; font-weight: 700; font-size: 40px; line-height: 1.2;">
+                            @item.title
+                        </h2>
+
+                        <p style="color: rgba(255,255,255,0.9) !important; line-height: 1.8; font-size: 15px; font-weight: 300;">
+                            @item.description
+                        </p>
+
+                        <div class="mt-4">
+                            <a href="/RentACar/Index" class="btn btn-primary py-3 px-4"
+                               style="background-color: #1089ff; border: 1px solid #1089ff; border-radius: 4px; font-weight: 500; font-size: 14px; color: #fff;">
+                                Hemen Araç Kirala
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 }
+
+<style>
+    /* ARKA PLANIN İKİYE BÖLÜNMESİ (ORİJİNAL MANTIK) */
+    /* Sol taraf beyaz kalır, sağ taraf (::after) belirttiğin noktadan başlar */
+    .ftco-about::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 35%; /* Orijinaldeki gibi resmin arkasından başlayan bölünme */
+        right: 0;
+        background: #0a1118 !important; /* İstediğin Koyu Premium Mavi/Siyah Ton */
+        z-index: 1;
+    }
+
+    /* Template'in orijinal yeşil katmanlarını ve pseudo-elementlerini tamamen temizliyoruz */
+    .ftco-about::before,
+    .wrap-about::after,
+    .wrap-about::before {
+        display: none !important;
+    }
+
+    /* Mobilde (telefonlarda) alt alta gelince tam ekran karanlık olması için */
+    @@media (max-width: 767.98px) {
+        .ftco-about::after {
+            left: 0;
+            top: 40%; /* Üstte resim beyazda, altta yazı karanlıkta kalır */
+            height: 60%;
+        }
+
+        .img-container .img {
+            width: 100% !important;
+            margin-left: 0 !important;
+        }
+    }
+</style>

@@ -1,5 +1,6 @@
 ﻿using CarBook.Application.Features.Brands.Commands.UpdateBrand;
 using CarBook.Application.Interfaces;
+using CarBook.Application.Interfaces.Hubs;
 using CarBook.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ namespace CarBook.Application.Features.Cars.Commands.UpdateCar
     public class UpdateCarCommandHandler
     {
         private readonly IRepository<Car> _repository;
-        public UpdateCarCommandHandler(IRepository<Car> repository)
+        private readonly IStatisticsHubService _carHubService;
+        public UpdateCarCommandHandler(IRepository<Car> repository, IStatisticsHubService carHubService)
         {
             _repository = repository;
+            _carHubService = carHubService;
         }
         public async Task Handle(UpdateCarCommandRequest request)
         {
@@ -31,6 +34,11 @@ namespace CarBook.Application.Features.Cars.Commands.UpdateCar
                 car.Fuel = request.Fuel;
                 car.BigImageUrl = request.BigImageUrl;
                 await _repository.UpdateAsync(car);
+                await _carHubService.SendMostBrandUpdateNotification();
+                await _carHubService.SendCarCountByKmUpdateNotification();
+                await _carHubService.SendCarCountByFuelUpdateNotification();
+                await _carHubService.SendCarModelAndBrandMaxOrMinDailyPriceUpdateNotification();
+                await _carHubService.SendAutomaticCarCountUpdateNotification();
             }
         }
     }

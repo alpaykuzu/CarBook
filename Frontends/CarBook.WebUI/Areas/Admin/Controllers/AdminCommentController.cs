@@ -1,10 +1,12 @@
 ﻿using CarBook.Dto.CommentDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http;
 
 namespace CarBook.WebUI.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     [Route("Admin/AdminComment")]
     public class AdminCommentController : Controller
@@ -19,7 +21,7 @@ namespace CarBook.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> CommentListByBlog(int id)
         {
             ViewBag.Id = id;
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync($"https://localhost:7131/api/Comments/GetAllCommentByBlog/{id}");
 
             if (response.IsSuccessStatusCode)

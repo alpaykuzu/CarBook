@@ -5,6 +5,7 @@ using CarBook.Application.Features.TagClouds.Queries.GetAllTagCloud;
 using CarBook.Application.Features.TagClouds.Queries.GetByBlogIdTagCloud;
 using CarBook.Application.Features.TagClouds.Queries.GetByIdTagCloud;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,18 +35,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByBlogIdTagCloudQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTagCloud([FromBody] CreateTagCloudCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateTagCloud([FromBody] UpdateTagCloudCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveTagCloud(int id)
         {

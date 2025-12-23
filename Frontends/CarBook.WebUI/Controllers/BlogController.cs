@@ -18,7 +18,7 @@ namespace CarBook.WebUI.Controllers
         {
             ViewBag.v1 = "Bloglar";
             ViewBag.v2 = "Bloglarımız";
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Blogs/GetLastNBlog");
 
             if (response.IsSuccessStatusCode)

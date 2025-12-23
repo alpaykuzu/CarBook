@@ -35,3 +35,30 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7131/statisticshub")
+                .withAutomaticReconnect()
+                .build();
+
+            connection.start().catch(err => console.error(err));
+
+            // Doğrudan değer güncelleyenler
+            connection.on("ReceiveCarCount", (val) => { $("#carcount").text(val); });
+            connection.on("ReceiveLocationCount", (val) => { $("#locationcount").text(val); });
+            connection.on("ReceiveBrandCount", (val) => { $("#brandcount").text(val); });
+
+            // Fiyat güncelleme (Notification mantığı)
+            connection.on("ReceiveCarPricingUpdateNotification", () => {
+                $.get("/Admin/AdminStatistics/GetUpdatedPricing?type=Saatlik", (data) => {
+                    const result = JSON.parse(data);
+                    $("#avgHourlyCount").text("₺ " + parseFloat(result.avaragePrice).toFixed(2));
+                });
+            });
+        });
+    </script>
+}

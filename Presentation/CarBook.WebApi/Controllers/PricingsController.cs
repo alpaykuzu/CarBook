@@ -4,6 +4,7 @@ using CarBook.Application.Features.Pricings.Commands.UpdatePricing;
 using CarBook.Application.Features.Pricings.Queries.GetAllPricing;
 using CarBook.Application.Features.Pricings.Queries.GetByIdPricing;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,18 +29,21 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdPricingQueryRequest(id)));
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreatePricing([FromBody] CreatePricingCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdatePricing([FromBody] UpdatePricingCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemovePricing(int id)
         {

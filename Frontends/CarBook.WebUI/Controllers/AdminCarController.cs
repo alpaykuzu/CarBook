@@ -1,5 +1,6 @@
 ﻿using CarBook.Dto.BrandDtos;
 using CarBook.Dto.CarDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -7,6 +8,7 @@ using System.Text;
 
 namespace CarBook.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminCarController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -18,7 +20,7 @@ namespace CarBook.WebUI.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Cars/GetAllCarWithBrand");
 
             if (response.IsSuccessStatusCode)
@@ -32,7 +34,7 @@ namespace CarBook.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> CreateCar()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Brands/GetAllBrand");
 
             if (response.IsSuccessStatusCode)
@@ -54,7 +56,7 @@ namespace CarBook.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCar(CreateCarDto createCarDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(createCarDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
@@ -68,7 +70,7 @@ namespace CarBook.WebUI.Controllers
         }
         public async Task<IActionResult> RemoveCar(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.DeleteAsync($"https://localhost:7131/api/Cars/RemoveCar/{id}");
             if (response.IsSuccessStatusCode)
             {
@@ -79,7 +81,7 @@ namespace CarBook.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateCar(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
 
             var responseBrand = await client.GetAsync("https://localhost:7131/api/Brands/GetAllBrand");
 
@@ -110,7 +112,7 @@ namespace CarBook.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCar(UpdateCarDto updateCarDto)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("CarBookClient");
             var jsonData = JsonConvert.SerializeObject(updateCarDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
 

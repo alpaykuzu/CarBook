@@ -24,6 +24,12 @@ namespace CarBook.WebUI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewBag.v1 = "Oturum";
+            ViewBag.v2 = "Giriş Yap";
+            if (Request.Query.ContainsKey("ReturnUrl") || User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("AccessDenied");
+            }
             return View();
         }
         [HttpPost]
@@ -50,7 +56,7 @@ namespace CarBook.WebUI.Controllers
                         if(jwtResponseModel.AccessToken != null)
                         {
                             claims.Add(new Claim("AccessToken", jwtResponseModel.AccessToken));
-                            var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var authProps = new AuthenticationProperties
                             {
                                 IsPersistent = true,
@@ -63,6 +69,17 @@ namespace CarBook.WebUI.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View(); 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Default");
         }
     }
 }

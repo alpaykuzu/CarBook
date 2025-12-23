@@ -4,6 +4,7 @@ using CarBook.Application.Features.SocialMedias.Commands.UpdateSocialMedia;
 using CarBook.Application.Features.SocialMedias.Queries.GetAllSocialMedia;
 using CarBook.Application.Features.SocialMedias.Queries.GetByIdSocialMedia;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,17 +30,20 @@ namespace CarBook.WebApi.Controllers
             return Ok(await _mediator.Send(new GetByIdSocialMediaQueryRequest(id)));
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateSocialMedia([FromBody] CreateSocialMediaCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateSocialMedia([FromBody] UpdateSocialMediaCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveSocialMedia(int id)
         {

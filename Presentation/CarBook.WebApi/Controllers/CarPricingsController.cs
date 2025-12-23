@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.CarPricings.Queries.GetAllCarPricingsWithCar;
+﻿using CarBook.Application.Features.CarPricings.Commands.CreateCarPricing;
+using CarBook.Application.Features.CarPricings.Queries.GetAllCarPricingsWithCar;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,12 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> GetAllCarPricingsWithCar()
         {
             return Ok(await mediator.Send(new GetAllCarPricingsWithCarQueryRequest()));
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateCarPricing([FromBody] CreateCarPricingCommandRequest createCarPricingCommandRequest)
+        {
+            await mediator.Send(createCarPricingCommandRequest);
+            return Ok();
         }
     }
 }

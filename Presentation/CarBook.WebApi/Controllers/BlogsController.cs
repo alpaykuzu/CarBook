@@ -2,10 +2,12 @@
 using CarBook.Application.Features.Blogs.Commands.RemoveBlog;
 using CarBook.Application.Features.Blogs.Commands.UpdateBlog;
 using CarBook.Application.Features.Blogs.Queries.GetAllBlog;
+using CarBook.Application.Features.Blogs.Queries.GetBlogsByAuthor;
 using CarBook.Application.Features.Blogs.Queries.GetByIdBlog;
 using CarBook.Application.Features.Blogs.Queries.GetByIdBlogWithAuthor;
 using CarBook.Application.Features.Blogs.Queries.GetLastBlogsWithAuthors;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,23 +37,31 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetByIdBlogWithAuthorQueryRequest(id)));
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBlogsByAuthor(int id)
+        {
+            return Ok(await _mediator.Send(new GetBlogsByAuthorQueryRequest(id)));
+        }
         [HttpGet]
         public async Task<IActionResult> GetLastNBlog(int number)
         {
             return Ok(await _mediator.Send(new GetLastBlogsWithAuthorsQueryRequest(number)));
         }
         [HttpPost]
+        [Authorize(Roles = "Author")]
         public async Task<IActionResult> CreateBlog([FromBody] CreateBlogCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Author")]
         [HttpPut]
         public async Task<IActionResult> UpdateBlog([FromBody] UpdateBlogCommandRequest request)
         {
             await _mediator.Send(request);
             return Ok();
         }
+        [Authorize(Roles = "Author, Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveBlog(int id)
         {

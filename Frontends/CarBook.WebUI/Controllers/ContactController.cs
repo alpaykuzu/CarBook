@@ -16,6 +16,8 @@ namespace CarBook.WebUI.Controllers
         [HttpGet]   
         public IActionResult Index()
         {
+            ViewBag.v1 = "İletişim";
+            ViewBag.v2 = "Bize Ulaşın";
             return View();
         }
 
@@ -24,7 +26,7 @@ namespace CarBook.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                var client = _httpClientFactory.CreateClient();
+                var client = _httpClientFactory.CreateClient("CarBookClient");
                 createContactDto.SendDate = DateTime.UtcNow;
                 var jsonData = JsonConvert.SerializeObject(createContactDto);
                 StringContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");

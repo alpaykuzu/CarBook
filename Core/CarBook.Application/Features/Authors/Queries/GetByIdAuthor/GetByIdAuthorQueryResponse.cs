@@ -9,6 +9,7 @@ namespace CarBook.Application.Features.Authors.Queries.GetByIdAuthor
     public class GetByIdAuthorQueryResponse
     {
         public int AuthorID { get; set; }
+        public int AppUserID { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public string Description { get; set; }

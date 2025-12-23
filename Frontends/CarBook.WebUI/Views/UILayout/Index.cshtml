@@ -12,6 +12,12 @@
 
     @await Component.InvokeAsync("_NavbarUILayoutComponentPartial")
 
+@*     @if (ViewContext.RouteData.Values["controller"].ToString() != "Login" &&
+        ViewContext.RouteData.Values["controller"].ToString() != "Register")
+    {
+        @await Component.InvokeAsync("_MainCoverUILayoutComponentPartial")
+    } *@
+
     @await Component.InvokeAsync("_MainCoverUILayoutComponentPartial")
 
     @RenderBody()

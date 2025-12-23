@@ -2,11 +2,11 @@
     <div class="container">
         <a class="navbar-brand" href="/Default/Index">Car<span>Book</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="oi oi-menu"></span> Menu
+            <span class="oi oi-menu"></span> Menü
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item"><a href="/Default/Index" class="nav-link">Ana Sayfa</a></li>
                 <li class="nav-item"><a href="/About/Index" class="nav-link">Hakkımızda</a></li>
                 <li class="nav-item"><a href="/Service/Index" class="nav-link">Hizmetler</a></li>
@@ -15,6 +15,67 @@
                 <li class="nav-item"><a href="/Blog/Index" class="nav-link">Bloglar</a></li>
                 <li class="nav-item"><a href="/Contact/Index" class="nav-link">İletişim</a></li>
             </ul>
+
+            <ul class="navbar-nav ml-auto align-items-center">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #1089ff !important;">
+                            <i class="icon-person mr-1"></i> @User.Identity.Name
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow border-0 animate slideIn" aria-labelledby="userDropdown" style="border-radius: 8px;">
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="dropdown-item py-2" href="/Admin/AdminDashboard/Index">
+                                    <i class="icon-dashboard mr-2 text-primary"></i> Yönetim Paneli
+                                </a>
+                                <div class="dropdown-divider"></div>
+                            }
+
+                            @* YAZAR (AUTHOR) ROLÜNE ÖZEL ALAN *@
+                            @if (User.IsInRole("Author"))
+                            {
+                                <a class="dropdown-item py-2" href="/AuthorBlog/Index">
+                                    <i class="icon-pencil mr-2 text-info"></i> Bloglarım
+                                </a>
+                                <div class="dropdown-divider"></div>
+                            }
+
+                            <a class="dropdown-item py-2 text-danger" href="/Login/Logout">
+                                <i class="icon-sign-out mr-2"></i> Güvenli Çıkış
+                            </a>
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a href="/Login/Index" class="nav-link border-right pr-3 mr-2">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Register/Index" class="btn btn-primary py-2 px-3 ml-lg-2 rounded" style="font-size: 13px;">Kayıt Ol</a>
+                    </li>
+                }
+            </ul>
         </div>
     </div>
 </nav>
+
+<style>
+    /* Dropdown menüsünün daha modern durması için küçük bir dokunuş */
+    .dropdown-item {
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s;
+    }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            padding-left: 20px;
+        }
+
+    .dropdown-divider {
+        margin: 0.5rem 0;
+    }
+</style>
