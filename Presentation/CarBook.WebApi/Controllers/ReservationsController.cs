@@ -1,4 +1,5 @@
-﻿using CarBook.Application.Features.Reservations.Commands.CreateReservation;
+﻿using CarBook.Application.Features.Reservations.Commands.ApproveReservation;
+using CarBook.Application.Features.Reservations.Commands.CreateReservation;
 using CarBook.Application.Features.Reservations.Queries.GetAllReservation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +27,12 @@ namespace CarBook.WebApi.Controllers
         public async Task<IActionResult> CreateReservation([FromBody] CreateReservationCommandQuery request)
         {
             await mediator.Send(request);
+            return Ok();
+        }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ApproveReservation(int id)
+        {
+            await mediator.Send(new ApproveReservationCommandRequest(id));
             return Ok();
         }
     }

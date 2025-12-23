@@ -1,0 +1,82 @@
+﻿@model CarBook.Dto.CarPricingDtos.ResultCarPricingByCarDto
+@{
+    ViewData["Title"] = "Araç Fiyat Bilgileri";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Araç Kiralama Fiyat Yönetimi</h4>
+                        <p class="card-subtitle mb-4">
+                            Seçili araç için saatlik, günlük ve haftalık kiralama bedellerini aşağıdan güncelleyebilirsiniz.
+                        </p>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form method="post">
+                                    <div class="card border shadow-none">
+                                        <div class="card-body">
+                                            <h5 class="text-primary"><i class="ri-time-line"></i> Saatlik Ücret</h5>
+                                            <input type="hidden" name="CarPricingID" value="@Model.HourlyCarPricingID" />
+                                            <input type="hidden" name="CarID" value="@Model.CarID" />
+                                            <input type="hidden" name="PricingID" value="@Model.HourlyPricingID" />
+                                            <div class="form-group mt-3">
+                                                <label>Fiyat (₺)</label>
+                                                <input type="text" name="Amount" class="form-control" value="@Model.HourlyPrice" />
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-primary btn-block mt-3">Saatliği Güncelle</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-4">
+                                <form method="post">
+                                    <div class="card border shadow-none">
+                                        <div class="card-body">
+                                            <h5 class="text-success"><i class="ri-calendar-event-line"></i> Günlük Ücret</h5>
+                                            <input type="hidden" name="CarPricingID" value="@Model.DailyCarPricingID" />
+                                            <input type="hidden" name="CarID" value="@Model.CarID" />
+                                            <input type="hidden" name="PricingID" value="@Model.DailyPricingID" />
+                                            <div class="form-group mt-3">
+                                                <label>Fiyat (₺)</label>
+                                                <input type="text" name="Amount" class="form-control" value="@Model.DailyPrice" />
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-success btn-block mt-3">Günlüğü Güncelle</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-md-4">
+                                <form method="post">
+                                    <div class="card border shadow-none">
+                                        <div class="card-body">
+                                            <h5 class="text-warning"><i class="ri-calendar-todo-line"></i> Haftalık Ücret</h5>
+                                            <input type="hidden" name="CarPricingID" value="@Model.WeeklyCarPricingID" />
+                                            <input type="hidden" name="CarID" value="@Model.CarID" />
+                                            <input type="hidden" name="PricingID" value="@Model.WeeklyPricingID" />
+                                            <div class="form-group mt-3">
+                                                <label>Fiyat (₺)</label>
+                                                <input type="text" name="Amount" class="form-control" value="@Model.WeeklyPrice" />
+                                            </div>
+                                            <button type="submit" class="btn btn-outline-warning btn-block mt-3">Haftalığı Güncelle</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <a href="/AdminCar/Index" class="btn btn-secondary waves-effect">Araç Listesine Dön</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

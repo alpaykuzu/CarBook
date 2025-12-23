@@ -38,10 +38,9 @@ namespace CarBook.Persistence.Context
         public DbSet<TagCloud> TagClouds { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<RentACar> RentACars { get; set; }
-        public DbSet<RentACarProcess> RentACarProcesses { get; set; }
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Rental> Rentals { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -57,6 +56,18 @@ namespace CarBook.Persistence.Context
                 .WithMany(l => l.DropOffReservations)
                 .HasForeignKey(r => r.DropOffLocationID)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Rental>()
+                .HasOne(x => x.Reservation)
+                .WithOne(y => y.Rental)
+                .HasForeignKey<Rental>(z => z.ReservationID)
+                .OnDelete(DeleteBehavior.Restrict);
+          
+            modelBuilder.Entity<Rental>()
+                .HasOne(x => x.Car)
+                .WithMany(y => y.Rentals)
+                .HasForeignKey(z => z.CarID)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

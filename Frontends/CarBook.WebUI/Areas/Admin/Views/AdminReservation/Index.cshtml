@@ -1,0 +1,101 @@
+﻿@model List<ResultReservationDto>
+@{
+    ViewData["Title"] = "Rezervasyon Listesi";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="page-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Rezervasyon Talepleri</h4>
+                        <p class="card-subtitle mb-4">Müşteri bilgileri, kiralanan araç detayları ve lokasyon bilgilerini bu panelden yönetebilirsiniz.</p>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Müşteri</th>
+                                        <th>Kiralanan Araç</th>
+                                        <th>Alış / İade Lokasyonu</th>
+                                        <th>Yaş / Ehliyet</th>
+                                        <th>Durum</th>
+                                        <th class="text-right">İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        count++;
+                                        <tr>
+                                            <th scope="row">@count</th>
+                                            <td>
+                                                <strong>@item.Name @item.Surname</strong><br />
+                                                <small class="text-muted">@item.Email</small>
+                                            </td>
+                                            <td>
+                                                <strong>@item.Brand</strong><br />
+                                                <span class="text-muted">@item.Model</span>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex flex-column">
+                                                    <span><i class="ri-map-pin-user-line text-primary mr-1"></i> @item.PickUpLocationName</span>
+                                                    <span><i class="ri-map-pin-2-line text-danger mr-1"></i> @item.DropOffLocationName</span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-soft-info">@item.Age Yaş</span><br />
+                                                <span class="badge badge-soft-dark mt-1">@item.DriverLicenseYear Yıl Tecrübe</span>
+                                            </td>
+                                            <td>
+                                                @if (item.Status == "Rezervasyon Alındı")
+                                                {
+                                                    <span class="badge badge-soft-warning font-size-13 p-2">Beklemede</span>
+                                                }
+                                                else if (item.Status == "Onaylandı" || item.Status == "Rezervasyon Onaylandı")
+                                                {
+                                                    <span class="badge badge-soft-success font-size-13 p-2">Onaylandı</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-soft-secondary font-size-13 p-2">@item.Status</span>
+                                                }
+                                            </td>
+                                            <td class="text-right">
+                                                @if (item.Status != "Onaylandı" && item.Status != "Rezervasyon Onaylandı")
+                                                {
+                                                    <a href="/Admin/AdminReservation/ApproveReservation/@item.ReservationID" class="btn btn-primary btn-sm waves-effect waves-light">
+                                                        <i class="ri-check-line mr-1"></i> Onayla
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <button class="btn btn-success btn-sm disabled" disabled>
+                                                        <i class="ri-checkbox-circle-line mr-1"></i> Tamamlandı
+                                                    </button>
+                                                }
+                                            </td>
+                                        </tr>
+                                        @if (!string.IsNullOrEmpty(item.Description))
+                                        {
+                                            <tr>
+                                                <td colspan="7" class="bg-light py-2">
+                                                    <i class="ri-information-line text-info ml-4 mr-1"></i>
+                                                    <small><strong>Müşteri Notu:</strong> @item.Description</small>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

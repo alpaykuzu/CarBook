@@ -33,7 +33,6 @@
                                 <div class="dropdown-divider"></div>
                             }
 
-                            @* YAZAR (AUTHOR) ROLÜNE ÖZEL ALAN *@
                             @if (User.IsInRole("Author"))
                             {
                                 <a class="dropdown-item py-2" href="/AuthorBlog/Index">
@@ -41,6 +40,11 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                             }
+
+                            <a class="dropdown-item py-2" href="/Rental/Index">
+                                <i class="icon-car mr-2 text-success"></i> Kiralamalarım
+                            </a>
+                            <div class="dropdown-divider"></div>
 
                             <a class="dropdown-item py-2 text-danger" href="/Login/Logout">
                                 <i class="icon-sign-out mr-2"></i> Güvenli Çıkış

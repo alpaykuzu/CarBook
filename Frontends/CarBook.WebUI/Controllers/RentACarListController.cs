@@ -17,11 +17,15 @@ namespace CarBook.WebUI.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            ViewBag.v1 = "Kiralama";
+            ViewBag.v2 = "Araç Listesi";
             ViewBag.book_pick_date = TempData["book_pick_date"];
             ViewBag.book_off_date = TempData["book_off_date"];
             ViewBag.time_pick = TempData["time_pick"];
             ViewBag.time_off = TempData["time_off"];
             ViewBag.locationID = TempData["locationID"];
+
+            TempData.Keep();
 
             var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync($"https://localhost:7131/api/RentACars/GetByLocationRentACar?locationID={ViewBag.locationID}");

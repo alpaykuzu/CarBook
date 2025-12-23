@@ -1,5 +1,4 @@
-﻿using CarBook.Dto.BrandDtos;
-using CarBook.Dto.LocationDtos;
+﻿using CarBook.Dto.LocationDtos;
 using CarBook.Dto.ReservationDtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,6 +21,29 @@ namespace CarBook.WebUI.Controllers
             ViewBag.v1 = "Araç Kiralama";
             ViewBag.v2 = "Araç Rezervasyon Formu";
             ViewBag.carID = id;
+
+            if (TempData["book_pick_date"] != null)
+            {
+                ViewBag.book_pick_date = DateTime.Parse(TempData["book_pick_date"].ToString()).ToString("yyyy-MM-dd");
+            }
+
+            if (TempData["book_off_date"] != null)
+            {
+                ViewBag.book_off_date = DateTime.Parse(TempData["book_off_date"].ToString()).ToString("yyyy-MM-dd");
+            }
+            ViewBag.time_pick = TempData["time_pick"];
+            ViewBag.time_off = TempData["time_off"];
+            ViewBag.locationID = TempData["locationID"];
+
+            TempData.Keep();
+
+            var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            ViewBag.userID = userIdClaim.Value;
 
             var client = _httpClientFactory.CreateClient("CarBookClient");
             var response = await client.GetAsync("https://localhost:7131/api/Locations/GetAllLocation");

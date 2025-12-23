@@ -22,16 +22,17 @@ namespace CarBook.Application.Features.Reservations.Commands.CreateReservation
         {
             Reservation reservation = new Reservation()
             {
-                Name = request.Name,
-                Surname = request.Surname,
-                Email = request.Email,
-                Phone = request.Phone,
                 CarID = request.CarID,
                 PickUpLocationID = request.PickUpLocationID,
                 DropOffLocationID = request.DropOffLocationID,
                 Age = request.Age,
                 DriverLicenseYear = request.DriverLicenseYear,
                 Description = request.Description,
+                AppUserID = request.AppUserID,
+                DropOffDate = request.DropOffDate,
+                DropOffTime = request.DropOffTime,
+                PickUpDate = request.PickUpDate,
+                PickUpTime = request.PickUpTime,
                 Status = "Rezervasyon Alındı"
             };
             await repository.CreateAsync(reservation);
