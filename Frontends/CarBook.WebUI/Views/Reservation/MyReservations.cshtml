@@ -1,0 +1,71 @@
+﻿@model List<CarBook.Dto.ReservationDtos.ResultReservationDto>
+@{
+    ViewData["Title"] = "Rezervasyonlarım";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-7 text-center heading-section ftco-animate">
+                <span class="subheading">Hesabım</span>
+                <h2 class="mb-3">Rezervasyon Taleplerim</h2>
+                <p>Oluşturduğunuz rezervasyon taleplerinin güncel durumunu buradan takip edebilirsiniz.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                @if (Model != null && Model.Count > 0)
+                {
+                    <div class="table-responsive bg-white p-4 shadow-sm rounded">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Araç</th>
+                                    <th>Alış Lokasyonu</th>
+                                    <th>İade Lokasyonu</th>
+                                    <th>Durum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@item.Brand @item.Model</strong><br />
+                                            <small class="text-muted">Rezervasyon No: #@item.ReservationID</small>
+                                        </td>
+                                        <td>@item.PickUpLocationName</td>
+                                        <td>@item.DropOffLocationName</td>
+                                        <td>
+                                            @if (item.Status == "Rezervasyon Alındı")
+                                            {
+                                                <span class="badge badge-warning p-2">Müşteri Temsilcisi Onayı Bekliyor</span>
+                                            }
+                                            else if (item.Status == "Onaylandı" || item.Status == "Rezervasyon Onaylandı")
+                                            {
+                                                <span class="badge badge-success p-2">Rezervasyon Onaylandı</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-secondary p-2">@item.Status</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info text-center p-5">
+                        <h5>Henüz bir rezervasyon talebiniz bulunmuyor.</h5>
+                        <a href="/Car/Index" class="btn btn-primary mt-3">Hemen Araç Seçin</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

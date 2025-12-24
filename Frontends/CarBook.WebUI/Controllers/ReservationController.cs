@@ -78,5 +78,31 @@ namespace CarBook.WebUI.Controllers
             }
             return View();
         }
+        [HttpGet]
+        [Route("/Reservation/MyReservations")]
+        public async Task<IActionResult> MyReservations()
+        {
+            ViewBag.v1 = "Rezervasyonlarım";
+            ViewBag.v2 = "Rezervasyon Talepleriniz";
+
+            var userId = User.Claims.FirstOrDefault(x => x.Type == System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (userId == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            var client = _httpClientFactory.CreateClient("CarBookClient");
+            var response = await client.GetAsync($"https://localhost:7131/api/Reservations/GetAllReservationByUserId/{userId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonData = await response.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultReservationDto>>(jsonData);
+                return View(values);
+            }
+
+            return View(new List<ResultReservationDto>());
+        }
     }
 }

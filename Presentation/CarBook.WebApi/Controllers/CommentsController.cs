@@ -36,7 +36,6 @@ namespace CarBook.WebApi.Controllers
         {
             return Ok(await _mediator.Send(new GetCommentCountByBlogQueryRequest(id)));
         }
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateComment([FromBody] CreateCommentCommandRequest request)
         {
