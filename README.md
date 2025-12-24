@@ -157,27 +157,27 @@ CarBook
 * Car Pricing Page
   * <img width="1889" height="906" alt="7" src="https://github.com/user-attachments/assets/4fda7ecf-b148-430f-8aeb-b612ce02ad6b" />
 * Cars Page
-  *   <img width="1895" height="910" alt="8" src="https://github.com/user-attachments/assets/cf764413-f9f3-4ad6-8027-1f7fd0f51ded" />
-*   Car Detail Page
-  *   <img width="1891" height="909" alt="9" src="https://github.com/user-attachments/assets/c9532ce7-de26-49f2-b1d3-d9fb83db6f1b" />
-*   Blog Page
-  *   <img width="1892" height="914" alt="10" src="https://github.com/user-attachments/assets/935c78d5-4b38-42ab-8300-3f17165f81d2" />
-*   My Blogs Page for the Author
-  *   <img width="1891" height="906" alt="11" src="https://github.com/user-attachments/assets/cbacbb40-e352-470e-8a38-04bafe73df2f" />
-*   Update Blog Page for Author
-  *   <img width="1892" height="912" alt="12" src="https://github.com/user-attachments/assets/78cdae50-4b96-4bb5-8eac-19e5e5782af8" />
-*   Admin Dashboard Panel
-  *   <img width="1898" height="912" alt="13" src="https://github.com/user-attachments/assets/cc168590-4bb0-4425-ba20-cdddadb6744a" />
-*   Admin Statistics Panel (Real Time)
-  *   <img width="1902" height="905" alt="14" src="https://github.com/user-attachments/assets/4c376538-c664-46e6-a426-ad4fc2202bba" />
-*   Admin Car Panel
-  *   <img width="1891" height="904" alt="15" src="https://github.com/user-attachments/assets/ef6005c2-e04f-4438-8b87-0dbeeaea7d23" />
-*   Admin Car Price Panel
-  *   <img width="1908" height="910" alt="16" src="https://github.com/user-attachments/assets/1b33a619-1b35-4d16-b1a0-491de4c864eb" />
-*   Admin Reservation Panel
-  *   <img width="1897" height="910" alt="17" src="https://github.com/user-attachments/assets/c3c3258f-73f3-41a8-b31f-8f80f4f60c20" />
-*   Admin Blog Panel
-  *   <img width="1914" height="915" alt="18" src="https://github.com/user-attachments/assets/936c49a4-f517-468a-a1d0-ad9268fc6e1b" />
+  * <img width="1895" height="910" alt="8" src="https://github.com/user-attachments/assets/cf764413-f9f3-4ad6-8027-1f7fd0f51ded" />
+* Car Detail Page
+  * <img width="1891" height="909" alt="9" src="https://github.com/user-attachments/assets/c9532ce7-de26-49f2-b1d3-d9fb83db6f1b" />
+* Blog Page
+  * <img width="1892" height="914" alt="10" src="https://github.com/user-attachments/assets/935c78d5-4b38-42ab-8300-3f17165f81d2" />
+* My Blogs Page for the Author
+  * <img width="1891" height="906" alt="11" src="https://github.com/user-attachments/assets/cbacbb40-e352-470e-8a38-04bafe73df2f" />
+* Update Blog Page for Author
+  * <img width="1892" height="912" alt="12" src="https://github.com/user-attachments/assets/78cdae50-4b96-4bb5-8eac-19e5e5782af8" />
+* Admin Dashboard Panel
+  * <img width="1898" height="912" alt="13" src="https://github.com/user-attachments/assets/cc168590-4bb0-4425-ba20-cdddadb6744a" />
+* Admin Statistics Panel (Real Time)
+  * <img width="1902" height="905" alt="14" src="https://github.com/user-attachments/assets/4c376538-c664-46e6-a426-ad4fc2202bba" />
+* Admin Car Panel
+  * <img width="1891" height="904" alt="15" src="https://github.com/user-attachments/assets/ef6005c2-e04f-4438-8b87-0dbeeaea7d23" />
+* Admin Car Price Panel
+  * <img width="1908" height="910" alt="16" src="https://github.com/user-attachments/assets/1b33a619-1b35-4d16-b1a0-491de4c864eb" />
+* Admin Reservation Panel
+  * <img width="1897" height="910" alt="17" src="https://github.com/user-attachments/assets/c3c3258f-73f3-41a8-b31f-8f80f4f60c20" />
+* Admin Blog Panel
+  * <img width="1914" height="915" alt="18" src="https://github.com/user-attachments/assets/936c49a4-f517-468a-a1d0-ad9268fc6e1b" />
 
 ---
 
