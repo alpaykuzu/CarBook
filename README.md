@@ -22,7 +22,7 @@ The solution is organized into four distinct layers:
   * **SignalR**: Real‑time hubs and statistics logic
 * **Presentation**
 
-  * **WebAPI**: RESTful API with 94+ endpoints
+  * **WebAPI**: RESTful API
 * **Frontend**
 
   * **WebUI**: ASP.NET Core 8.0 MVC application consuming the API via `IHttpClientFactory`
